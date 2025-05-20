@@ -17,6 +17,7 @@ public class MoveManager : Singleton<MoveManager>
 
     public LayerMask layer;
     public bool HasPiece => currentPiece != null;
+    private bool isFirstCheck = true;
 
     private void Start()
     {
@@ -46,28 +47,81 @@ public class MoveManager : Singleton<MoveManager>
         _returnButton.interactable = false;
     }
 
-    public void CalculateAvailablePosses(int id)
+    public async void CheckPlaces()
     {
-        places.ForEach(x => x.SetAvailable(false));
-        foreach (int val in DiceManager.Instance.Values)
+        List<BoardPlace> selectedPlaces = new List<BoardPlace>();
+
+        foreach (var place in places)
         {
-            CheckPlace(id + val);
+            if (!place.CheckAvailableForChoose())
+                continue;
+
+            if (CalculateAvailablePosses(place.Id))
+            {
+                selectedPlaces.Add(place);
+            }
         }
 
-        var totalValue = DiceManager.Instance.TotalValue;
-        if (totalValue > 0)
-            CheckPlace(id + totalValue);
+        foreach (var place in selectedPlaces)
+        {
+            place.SetAvailableForChoose();
+        }
+
+
+        if (selectedPlaces.Count <= 0)
+        {
+            if(isFirstCheck)
+            {
+                await Task.Delay(1000);
+                MoveDone();
+            }
+            else
+            {
+                _doneButton.interactable = true;
+            }
+        }
+
+        isFirstCheck = false;
     }
 
-    private void CheckPlace(int val)
+    public bool CalculateAvailablePosses(int id)
     {
-        if (val < places.Count)
+        places.ForEach(x => x.SetAvailable(false));
+        bool hasAnyPlace = false;
+        foreach (int val in DiceManager.Instance.Values)
+        {
+            var total = GameManager.CurrentPieceType == PieceType.White ? id - val : id + val;
+            if (CheckPlace(total))
+                hasAnyPlace = true;
+        }
+
+        if (!hasAnyPlace)
+            return false;
+
+        var totalValue = DiceManager.Instance.TotalValue;
+
+        if (totalValue > 0)
+        {
+            var total = GameManager.CurrentPieceType == PieceType.White ? id - totalValue : id + totalValue;
+            CheckPlace(total);
+        }
+
+        return true;
+    }
+
+    private bool CheckPlace(int val)
+    {
+        if (val < places.Count && val >= 0)
         {
             if (places[val].CheckAvailable())
             {
-                places[val].SetAvailable(true);
+                if (currentPiece != null)
+                    places[val].SetAvailable(true);
+                return true;
             }
         }
+
+        return false;
     }
 
     private void Update()
@@ -87,7 +141,9 @@ public class MoveManager : Singleton<MoveManager>
         Move move = new Move(currentPiece, oldPlace, place, moveVal);
         moves.Add(move);
 
+        oldPlace.RemovePiece(currentPiece);
         place.AddPiece(currentPiece);
+
         places.ForEach(x => x.SetAvailable(false));
         currentPiece = null;
     }
@@ -104,6 +160,9 @@ public class MoveManager : Singleton<MoveManager>
 
         _returnButton.interactable = moves.Count > 0;
         _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
+
+        if (DiceManager.Instance.Values.Count > 0)
+            CheckPlaces();
     }
 
     private void MoveDone()
@@ -112,6 +171,7 @@ public class MoveManager : Singleton<MoveManager>
         _returnButton.interactable = false;
         _doneButton.interactable = false;
         GameManager.Instance.TourDone();
+        isFirstCheck = true;
     }
 
     private void MoveBack()
@@ -127,7 +187,12 @@ public class MoveManager : Singleton<MoveManager>
 
         _returnButton.interactable = moves.Count > 0;
         _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
+
+
+        CheckPlaces();
     }
+
+
 }
 
 [System.Serializable]

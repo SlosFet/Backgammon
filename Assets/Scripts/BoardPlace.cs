@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IDropHandler
+public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IDragHandler
 {
     public int Id;
     [SerializeField] private bool _canAvailable = false;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private List<Piece> _pieces;
 
     private bool hasSelected = false;
 
-    public void OnDrag(PointerEventData eventData)
+    private void Start()
     {
-        if (!_canAvailable)
-            return;
-
-        print("Sürükledi");
+        var pieces = GetComponentsInChildren<Piece>().ToList();
+        foreach (var piece in pieces)
+        {
+            AddPiece(piece);
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -33,40 +36,51 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!hasSelected)
             return;
 
+        print("Býraktý : " + hasSelected);
+
         hasSelected = false;
         MoveManager.Instance.OnEndDrag(this);
-        print("Býraktý");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (MoveManager.Instance.HasPiece)
+        if (MoveManager.Instance.HasPiece || !_canAvailable)
             return;
 
-        var go = transform.GetChild(0);
-        if (go == null)
+        if (_pieces.Count <= 0)
             return;
 
         print("Bastý");
         hasSelected = true;
-        MoveManager.Instance.SetCurrentPiece(go.GetComponent<Piece>());
+        MoveManager.Instance.SetCurrentPiece(_pieces[^1]);
         MoveManager.Instance.CalculateAvailablePosses(Id);
     }
 
     public void AddPiece(Piece piece)
     {
+        print(12321);
         piece.transform.parent = transform;
-        piece.transform.localPosition = Vector3.zero;
+        piece.transform.localEulerAngles = Vector3.right * -90;
+
+        if (!_pieces.Contains(piece))
+            _pieces.Add(piece);
+
+        piece.transform.localPosition = Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1);
+
     }
 
     public void RemovePiece(Piece piece)
     {
-
+        if (_pieces.Contains(piece))
+            _pieces.Remove(piece);
     }
 
     public bool CheckAvailable()
     {
-        return true;
+        if (_pieces.Count <= 1 || _pieces[^1].PieceType == GameManager.CurrentPieceType)
+            return true;
+
+        return false;
     }
 
     public void SetAvailable(bool state)
@@ -75,5 +89,23 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         _spriteRenderer.color = state ? Color.green : Color.gray;
     }
 
+    public bool CheckAvailableForChoose()
+    {
+        if (_pieces.Count <= 0 || _pieces[^1].PieceType != GameManager.CurrentPieceType)
+            return false;
 
+        else
+            return true;
+    }
+
+    public void SetAvailableForChoose()
+    {
+        _canAvailable = true;
+        _spriteRenderer.color = Color.blue;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
+    }
 }

@@ -54,6 +54,7 @@ public class DiceManager : Singleton<DiceManager>
         SetPlaces();
 
         _rollButton.gameObject.SetActive(false);
+        MoveManager.Instance.CheckPlaces();
     }
 
     public void OnPiecePlaced(int val)
