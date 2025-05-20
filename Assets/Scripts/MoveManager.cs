@@ -16,6 +16,7 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private List<Move> moves;
 
     public LayerMask layer;
+    public bool HasPiece => currentPiece != null;
 
     private void Start()
     {
@@ -42,6 +43,7 @@ public class MoveManager : Singleton<MoveManager>
     public void SetCurrentPiece(Piece piece)
     {
         currentPiece = piece;
+        _returnButton.interactable = false;
     }
 
     public void CalculateAvailablePosses(int id)
@@ -99,11 +101,17 @@ public class MoveManager : Singleton<MoveManager>
             place.AddPiece(currentPiece);
             currentPiece = null;
         }
+
+        _returnButton.interactable = moves.Count > 0;
+        _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
     }
 
     private void MoveDone()
     {
         moves.Clear();
+        _returnButton.interactable = false;
+        _doneButton.interactable = false;
+        GameManager.Instance.TourDone();
     }
 
     private void MoveBack()
@@ -116,6 +124,9 @@ public class MoveManager : Singleton<MoveManager>
         move.newPlace.RemovePiece(move.piece);
         move.oldPlace.AddPiece(move.piece);
         moves.Remove(move);
+
+        _returnButton.interactable = moves.Count > 0;
+        _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
     }
 }
 

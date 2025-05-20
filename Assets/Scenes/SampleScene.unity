@@ -508,7 +508,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 160376235}
   m_OnClick:
     m_PersistentCalls:
@@ -629,7 +629,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 236434377}
   m_OnClick:
     m_PersistentCalls:
@@ -705,6 +705,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716137a8e0a959744926294b59b0fc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &598999525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598999527}
+  - component: {fileID: 598999526}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &598999526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598999525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abaf6bc11b4aa3e49aee8a8c287bf077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1:
+    Type: 0
+  player2:
+    Type: 1
+--- !u!4 &598999527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598999525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6410925, y: -1.8215235, z: 10.8237295}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &602950725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4543289681793604458, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
@@ -764,7 +812,7 @@ MonoBehaviour:
   diceVal2: 4
   dice1Text: {fileID: 1129533976}
   dice2Text: {fileID: 1149409353}
-  isCheatActive: 1
+  isCheatActive: 0
   _rollButton: {fileID: 732994323}
   Values: 
   TotalValue: 0
@@ -3113,6 +3161,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 632448631}
   - {fileID: 158800743}
+  - {fileID: 598999527}
   - {fileID: 1539810773}
   - {fileID: 805115903575504435}
   - {fileID: 4087000482872491792}

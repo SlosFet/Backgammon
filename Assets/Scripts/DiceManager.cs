@@ -52,6 +52,8 @@ public class DiceManager : Singleton<DiceManager>
         dice2Text.text = diceVal2.ToString();
 
         SetPlaces();
+
+        _rollButton.gameObject.SetActive(false);
     }
 
     public void OnPiecePlaced(int val)
@@ -112,5 +114,10 @@ public class DiceManager : Singleton<DiceManager>
         }
 
         Values = Values.OrderBy(x => x).ToList();
+    }
+
+    public void OnTourDone()
+    {
+        _rollButton.gameObject.SetActive(true);
     }
 }

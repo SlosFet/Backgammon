@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BoardPlace : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IDropHandler
 {
     public int Id;
     [SerializeField] private bool _canAvailable = false;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+
+    private bool hasSelected = false;
+
     public void OnDrag(PointerEventData eventData)
     {
         if (!_canAvailable)
@@ -25,19 +28,27 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IDragHandler, IEnd
         MoveManager.Instance.OnDrop(this);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
+        if (!hasSelected)
+            return;
+
+        hasSelected = false;
         MoveManager.Instance.OnEndDrag(this);
         print("Býraktý");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (MoveManager.Instance.HasPiece)
+            return;
+
         var go = transform.GetChild(0);
         if (go == null)
             return;
 
         print("Bastý");
+        hasSelected = true;
         MoveManager.Instance.SetCurrentPiece(go.GetComponent<Piece>());
         MoveManager.Instance.CalculateAvailablePosses(Id);
     }
@@ -63,4 +74,6 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IDragHandler, IEnd
         _canAvailable = state;
         _spriteRenderer.color = state ? Color.green : Color.gray;
     }
+
+
 }
