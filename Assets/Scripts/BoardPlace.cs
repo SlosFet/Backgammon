@@ -12,6 +12,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     [SerializeField] private List<Piece> _pieces;
 
     private bool hasSelected = false;
+    public int GetPieceCount => _pieces.Count;
 
     private void Start()
     {
@@ -58,9 +59,14 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void AddPiece(Piece piece)
     {
-        print(12321);
         piece.transform.parent = transform;
         piece.transform.localEulerAngles = Vector3.right * -90;
+
+        if (_pieces.Count == 1 && _pieces[0].PieceType != piece.PieceType)
+        {
+            MoveManager.Instance.AddBrokenPiece(_pieces[0]);
+            _pieces.RemoveAt(0);
+        }
 
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
@@ -86,7 +92,9 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public void SetAvailable(bool state)
     {
         _canAvailable = state;
-        _spriteRenderer.color = state ? Color.green : Color.gray;
+
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = state ? Color.green : Color.gray;
     }
 
     public bool CheckAvailableForChoose()
@@ -106,6 +114,6 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        
+
     }
 }

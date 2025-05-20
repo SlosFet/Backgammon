@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private Button _returnButton;
 
     [SerializeField] private List<Move> moves;
+
+    [SerializeField] private List<BrokenVariables> _brokenVariables;
 
     public LayerMask layer;
     public bool HasPiece => currentPiece != null;
@@ -50,6 +53,16 @@ public class MoveManager : Singleton<MoveManager>
     public async void CheckPlaces()
     {
         List<BoardPlace> selectedPlaces = new List<BoardPlace>();
+        _brokenVariables.ForEach(x=>x.parent.SetAvailable(false));
+
+        var broken = _brokenVariables.First(x => x.pieceType == GameManager.CurrentPieceType);
+        Debug.LogError(broken.parent.GetPieceCount > 0);
+        broken.parent.SetAvailable(broken.parent.GetPieceCount > 0);
+
+
+        var selectedList = broken.parent.GetPieceCount <= 0 ?
+            places :
+            broken.places;
 
         foreach (var place in places)
         {
@@ -62,15 +75,18 @@ public class MoveManager : Singleton<MoveManager>
             }
         }
 
-        foreach (var place in selectedPlaces)
+        if (broken.parent.GetPieceCount <= 0)
         {
-            place.SetAvailableForChoose();
+            foreach (var place in selectedPlaces)
+            {
+                place.SetAvailableForChoose();
+            }
         }
 
 
         if (selectedPlaces.Count <= 0)
         {
-            if(isFirstCheck)
+            if (isFirstCheck)
             {
                 await Task.Delay(1000);
                 MoveDone();
@@ -165,6 +181,12 @@ public class MoveManager : Singleton<MoveManager>
             CheckPlaces();
     }
 
+    public void AddBrokenPiece(Piece piece)
+    {
+        var broken = _brokenVariables.First(x => x.pieceType == piece.PieceType);
+        broken.parent.AddPiece(piece);
+    }
+
     private void MoveDone()
     {
         moves.Clear();
@@ -193,6 +215,14 @@ public class MoveManager : Singleton<MoveManager>
     }
 
 
+}
+
+[System.Serializable]
+public class BrokenVariables
+{
+    public List<BoardPlace> places;
+    public BoardPlace parent;
+    public PieceType pieceType;
 }
 
 [System.Serializable]
