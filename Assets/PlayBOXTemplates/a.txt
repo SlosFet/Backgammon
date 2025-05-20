@@ -1,0 +1,17 @@
+oyuna bak yer datası ve ses datası göndermeli her zaman
+playboxdatamanager i projelere at
+pausemenu içini değiş
+oyun dışında çalışan loglar gitsin
+
+
+       UnityPipeCommunication.ClearLogFile();
+       foreach (var player in playerIndexes)
+       {
+           int index = player;
+           UnityPipeCommunication.SendMessageToElectron($"SCORE:{index}:{0}:{DateTime.Now}:{PlayBoxLauncherDataManager.RoundToNearestVolume()}");
+       }
+
+
+
+
+

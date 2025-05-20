@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BoardPlace : MonoBehaviour
+public class BoardPlace : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnDrag(PointerEventData eventData)
     {
-        
+        print("Sürükledi");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDrop(PointerEventData eventData)
     {
-        
+        print("düþtü");
+        MoveManager.Instance.OnDrop(this);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        print("Býraktý");
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        var go = transform.GetChild(0);
+        if (go == null)
+            return;
+
+        print("Bastý");
+        go.transform.parent = null;
+        MoveManager.Instance.SetCurrentPiece(go.GetComponent<Piece>());
+    }
+
+    public void AddPiece(Piece piece)
+    {
+        piece.transform.parent = transform;
+
     }
 }
