@@ -21,7 +21,7 @@ public class DiceManager : Singleton<DiceManager>
     public int TotalValue;
 
 
-    private void Awake()
+    private void Start()
     {
         _rollButton.onClick.AddListener(RollDices);
     }
