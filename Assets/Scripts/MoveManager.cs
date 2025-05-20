@@ -13,6 +13,8 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private Button _doneButton;
     [SerializeField] private Button _returnButton;
 
+    [SerializeField] private List<Move> moves;
+
     public LayerMask layer;
 
     private void Start()
@@ -76,7 +78,12 @@ public class MoveManager : Singleton<MoveManager>
 
     public void OnDrop(BoardPlace place)
     {
-        DiceManager.Instance.OnPiecePlaced(Mathf.Abs(currentPiece.transform.parent.GetComponent<BoardPlace>().Id - place.Id));
+        BoardPlace oldPlace = currentPiece.transform.parent.GetComponent<BoardPlace>();
+        int moveVal = Mathf.Abs(oldPlace.Id - place.Id);
+
+        DiceManager.Instance.OnPiecePlaced(moveVal);
+        Move move = new Move(currentPiece, oldPlace, place, moveVal);
+        moves.Add(move);
 
         place.AddPiece(currentPiece);
         places.ForEach(x => x.SetAvailable(false));
@@ -96,11 +103,35 @@ public class MoveManager : Singleton<MoveManager>
 
     private void MoveDone()
     {
-
+        moves.Clear();
     }
 
     private void MoveBack()
     {
+        if (moves.Count <= 0)
+            return;
 
+        Move move = moves[^1];
+        DiceManager.Instance.OnMoveReturn(move.moveVal);
+        move.newPlace.RemovePiece(move.piece);
+        move.oldPlace.AddPiece(move.piece);
+        moves.Remove(move);
+    }
+}
+
+[System.Serializable]
+public class Move
+{
+    public Piece piece;
+    public BoardPlace oldPlace;
+    public BoardPlace newPlace;
+    public int moveVal;
+
+    public Move(Piece piece, BoardPlace oldPlace, BoardPlace newPlace, int moveVal)
+    {
+        this.piece = piece;
+        this.oldPlace = oldPlace;
+        this.newPlace = newPlace;
+        this.moveVal = moveVal;
     }
 }

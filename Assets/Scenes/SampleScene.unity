@@ -424,6 +424,9 @@ MonoBehaviour:
   - {fileID: 333045732}
   - {fileID: 17517685}
   - {fileID: 1675926251}
+  _doneButton: {fileID: 236434376}
+  _returnButton: {fileID: 160376234}
+  moves: []
   layer:
     serializedVersion: 2
     m_Bits: 64
@@ -561,7 +564,7 @@ GameObject:
   - component: {fileID: 236434377}
   - component: {fileID: 236434376}
   m_Layer: 5
-  m_Name: Okey
+  m_Name: Done
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

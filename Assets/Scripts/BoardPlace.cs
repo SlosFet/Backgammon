@@ -48,6 +48,11 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IDragHandler, IEnd
         piece.transform.localPosition = Vector3.zero;
     }
 
+    public void RemovePiece(Piece piece)
+    {
+
+    }
+
     public bool CheckAvailable()
     {
         return true;

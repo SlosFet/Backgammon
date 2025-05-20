@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -99,7 +100,17 @@ public class DiceManager : Singleton<DiceManager>
 
         else
         {
-
+            for (int i = 0; i < Values.Count; i++)
+            {
+                Values[i] = Values[i] + val;
+            }
+            int count = val / diceVal1;
+            for (int i = 0; i < count; i++)
+            {
+                Values.Add(diceVal1 * (i + 1));
+            }
         }
+
+        Values = Values.OrderBy(x => x).ToList();
     }
 }
