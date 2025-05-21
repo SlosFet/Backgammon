@@ -30,7 +30,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
             return;
 
         print("düþtü");
-        MoveManager.Instance.OnDrop(this);
+        MoveManager.Instance.OnDrop(this,TryGetComponent(out CollectPlace place));
     }
 
     public void OnPointerUp(PointerEventData eventData)

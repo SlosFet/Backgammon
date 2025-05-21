@@ -8,11 +8,12 @@ public class GameManager : Singleton<GameManager>
     public Player player2;
 
     public static PieceType CurrentPieceType;
+    public PieceType StartPieceType;
 
     private void Start()
     {
         Application.targetFrameRate = 60;
-        CurrentPieceType = PieceType.White;
+        CurrentPieceType = StartPieceType;
     }
 
     public void TourDone()

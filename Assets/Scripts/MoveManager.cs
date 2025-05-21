@@ -277,13 +277,27 @@ public class MoveManager : Singleton<MoveManager>
         currentPiece.SetPos(GetMousePos());
     }
 
-    public void OnDrop(BoardPlace place)
+    public void OnDrop(BoardPlace place, bool isCollectedPiece)
     {
         BoardPlace oldPlace = currentPiece.transform.parent.GetComponent<BoardPlace>();
         int moveVal = Mathf.Abs(oldPlace.Id - place.Id);
 
-        DiceManager.Instance.OnPiecePlaced(moveVal);
+        if (isCollectedPiece && !DiceManager.Instance.Values.Contains(moveVal))
+        {
+            var list = DiceManager.Instance.Values.OrderBy(x => x).ToList();
+            foreach (var item in list)
+            {
+                if (item > moveVal)
+                {
+                    moveVal = item;
+                    break;
+                }
+            }
+        }
+
         Move move = new Move(currentPiece, oldPlace, place, moveVal);
+        DiceManager.Instance.OnPiecePlaced(moveVal);
+
         moves.Add(move);
 
         oldPlace.RemovePiece(currentPiece);
