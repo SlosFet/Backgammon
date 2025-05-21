@@ -65,6 +65,7 @@ public class MoveManager : Singleton<MoveManager>
     public void CheckPlaces()
     {
         CloseAllPlaces();
+        DiceManager.Instance.ResetFill();
 
         var broken = _brokenVariables.First(x => x.pieceType == GameManager.CurrentPieceType);
 
@@ -184,6 +185,7 @@ public class MoveManager : Singleton<MoveManager>
             {
                 checkForEqual = true;
                 hasAnyPlace = true;
+                DiceManager.Instance.SetFill(val);
             }
 
             if (DiceManager.Instance.isEqual && !checkForEqual)
@@ -363,6 +365,8 @@ public class MoveManager : Singleton<MoveManager>
 
         if (DiceManager.Instance.Values.Count > 0)
             CheckPlaces();
+        else
+            DiceManager.Instance.ResetFill();
     }
 
     public void AddBrokenPiece(Piece piece)

@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 public class Dice : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Dice : MonoBehaviour
 
     private Dictionary<int, Quaternion> faceRotations; // 1–6 için rotasyonlar
     private bool isRolling = false;
+    public int value;
+    public Transform canvas;
+    public Image image;
 
     private void Awake()
     {
@@ -36,11 +40,14 @@ public class Dice : MonoBehaviour
 
     }
 
-    public async void Roll(int value)
+    public async Task Roll(int value)
     {
-        gameObject.SetActive(true);
 
+        gameObject.SetActive(true);
+        canvas.gameObject.SetActive(false);
+        this.value = value;
         transform.position = firstPlace;
+
         if (isRolling || !faceRotations.ContainsKey(value)) return;
         isRolling = true;
 
@@ -63,7 +70,14 @@ public class Dice : MonoBehaviour
         //await Task.Delay((int)(moveDuration * 1000) / 2);
         //spin2.Kill();
 
+        canvas.gameObject.SetActive(true);
         transform.rotation = targetRotation;
         isRolling = false;
+        canvas.transform.eulerAngles = Vector3.zero;
+        SetImageFill(0);
+        await Task.CompletedTask;
     }
+
+    public void SetImageFill(float amount) => image.fillAmount = amount;
+    public float GetImageFill() => image.fillAmount ;
 }

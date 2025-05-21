@@ -31,7 +31,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private void Start()
     {
-        _rollButtons.ForEach(x=>x.onClick.AddListener(RollDices));
+        _rollButtons.ForEach(x => x.onClick.AddListener(RollDices));
     }
     public void SetPlaces()
     {
@@ -50,21 +50,21 @@ public class DiceManager : Singleton<DiceManager>
         }
     }
 
-    public void RollDices()
+    public async void RollDices()
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
 
         print("Sent values : " + diceVal1 + " " + diceVal2);
-        if(GameManager.CurrentPieceType == PieceType.White)
+        if (GameManager.CurrentPieceType == PieceType.White)
         {
             _whiteDice1.Roll(diceVal1);
-            _whiteDice2.Roll(diceVal2);
+            await _whiteDice2.Roll(diceVal2);
         }
         else
         {
             _blackDice1.Roll(diceVal1);
-            _blackDice2.Roll(diceVal2);
+            await _blackDice2.Roll(diceVal2);
         }
 
         dice1Text.text = diceVal1.ToString();
@@ -78,7 +78,7 @@ public class DiceManager : Singleton<DiceManager>
 
     public void OnPiecePlaced(int val)
     {
-        if(!isEqual)
+        if (!isEqual)
         {
             if (Values.Contains(val))
                 Values.Remove(val);
@@ -91,7 +91,7 @@ public class DiceManager : Singleton<DiceManager>
             List<int> newList = new List<int>();
             foreach (var value in Values)
             {
-                if(val >= value)
+                if (val >= value)
                     newList.Add(value);
             }
 
@@ -111,7 +111,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         if (!isEqual)
         {
-            if(val == diceVal1 + diceVal2)
+            if (val == diceVal1 + diceVal2)
                 SetPlaces();
             else
             {
@@ -144,5 +144,43 @@ public class DiceManager : Singleton<DiceManager>
         _blackDice2.gameObject.SetActive(false);
 
         _rollButtons[(int)GameManager.CurrentPieceType].gameObject.SetActive(true);
+    }
+
+    public void SetFill(int val)
+    {
+        Dice dice1 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
+        Dice dice2 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
+
+        if(!isEqual)
+        {
+            if(dice1.value == val)
+                dice1.SetImageFill(val);
+            else
+                dice2.SetImageFill(val);
+        }
+
+        else
+        {
+            for (int i = 0; i < Values.Count; i++)
+            {
+                if (i == 0)
+                    dice1.SetImageFill(0.5f);
+                if (i == 1)
+                    dice1.SetImageFill(1f);
+                if (i == 2)
+                    dice2.SetImageFill(0.5f);
+                if (i == 3)
+                    dice2.SetImageFill(1f);
+            }
+        }
+    }
+
+    public void ResetFill()
+    {
+        Dice dice1 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
+        Dice dice2 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
+
+        dice1.SetImageFill(0);
+        dice2.SetImageFill(0);
     }
 }
