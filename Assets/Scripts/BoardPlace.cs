@@ -110,7 +110,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public void SetAvailableForChoose()
     {
         _canAvailable = true;
-        _spriteRenderer.color = Color.blue;
+        _pieces[^1].ToggleHover(true);
     }
 
     public void Broke()

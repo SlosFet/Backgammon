@@ -1,4 +1,5 @@
 using DG.Tweening;
+using EPOOutline;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,13 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
     public PieceType PieceType;
+    private Outlinable _outline;
+
+    private void Awake()
+    {
+        _outline = GetComponent<Outlinable>();
+        ToggleHover(false);
+    }
     public void SetPos(Vector3 pos)
     {
         transform.position = pos;
@@ -20,6 +28,6 @@ public class Piece : MonoBehaviour
 
     public void ToggleHover(bool toggle)
     {
-
+        _outline.enabled = toggle;
     }
 }
