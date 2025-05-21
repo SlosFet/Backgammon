@@ -13,6 +13,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     private bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
+    public PieceType GetLastPieceType => _pieces[0].PieceType;
 
     private void Start()
     {
@@ -110,6 +111,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         _canAvailable = true;
         _spriteRenderer.color = Color.blue;
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {

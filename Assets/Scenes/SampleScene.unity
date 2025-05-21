@@ -509,6 +509,8 @@ MonoBehaviour:
     - {fileID: 1743978371}
     parent: {fileID: 411283523}
     pieceType: 1
+  _whiteCollectIds: 000000000100000002000000030000000400000005000000
+  _blackCollectIds: 120000001300000014000000150000001600000017000000
   layer:
     serializedVersion: 2
     m_Bits: 64
@@ -845,6 +847,7 @@ MonoBehaviour:
   Id: -1
   _canAvailable: 0
   _spriteRenderer: {fileID: 0}
+  _pieces: []
 --- !u!114 &557968998 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8970344085859010617, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
@@ -2316,6 +2319,7 @@ MonoBehaviour:
   Id: 24
   _canAvailable: 0
   _spriteRenderer: {fileID: 0}
+  _pieces: []
 --- !u!114 &1353056453 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8970344085859010617, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}

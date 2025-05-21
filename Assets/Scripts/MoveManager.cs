@@ -18,6 +18,9 @@ public class MoveManager : Singleton<MoveManager>
 
     [SerializeField] private List<BrokenVariables> _brokenVariables;
 
+    [SerializeField] private List<int> _whiteCollectIds;
+    [SerializeField] private List<int> _blackCollectIds;
+
     public LayerMask layer;
     public bool HasPiece => currentPiece != null;
     private bool isFirstCheck = true;
@@ -50,8 +53,9 @@ public class MoveManager : Singleton<MoveManager>
         _returnButton.interactable = false;
     }
 
-    public async void CheckPlaces()
+    public void CheckPlaces()
     {
+        Debug.LogError(GameManager.CurrentPieceType + " Can Collect : " + CheckPlayerCanCollectPieces(GameManager.CurrentPieceType));
         List<BoardPlace> selectedPlaces = new List<BoardPlace>();
         _brokenVariables.ForEach(x => x.parent.SetAvailable(false));
 
@@ -86,14 +90,9 @@ public class MoveManager : Singleton<MoveManager>
         if (selectedPlaces.Count <= 0)
         {
             if (isFirstCheck)
-            {
-                await Task.Delay(1000);
-                MoveDone();
-            }
+                Invoke(nameof(MoveDone), 1);
             else
-            {
                 _doneButton.interactable = true;
-            }
         }
 
         isFirstCheck = false;
@@ -221,7 +220,24 @@ public class MoveManager : Singleton<MoveManager>
         CheckPlaces();
     }
 
+    private bool CheckPlayerCanCollectPieces(PieceType type)
+    {
+        bool canCollect = true;
+        var list = type == PieceType.White ? _whiteCollectIds : _blackCollectIds;
 
+        if (_brokenVariables.First(x => x.pieceType == type).parent.GetPieceCount > 0)
+            return false;
+
+        foreach (var place in places)
+        {
+            if(place.GetPieceCount > 0 && place.GetLastPieceType == type)
+            {
+                if (!list.Contains(place.Id))
+                    return false;
+            }
+        }
+        return canCollect;
+    }
 }
 
 [System.Serializable]
