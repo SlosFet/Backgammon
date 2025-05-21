@@ -23,7 +23,7 @@ public class Piece : MonoBehaviour
     {
         transform.DOKill();
         transform.DOLocalMove(pos, 0.2f).SetEase(Ease.Linear);
-        transform.DOLocalRotate(rot, 0.2f).SetEase(Ease.Linear);
+        transform.DORotate(rot, 0.2f).SetEase(Ease.Linear);
     }
 
     public void ToggleHover(bool toggle)

@@ -8,7 +8,8 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 {
     public int Id;
     [field: SerializeField] protected bool _canAvailable = false;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+
+    [SerializeField] private GameObject _selectedImage;
     [SerializeField] private GameObject _hoverObject;
 
     [field: SerializeField] protected List<Piece> _pieces;
@@ -73,7 +74,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
 
-        piece.MovePos(Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1), Vector3.right * -90);
+        piece.MovePos(Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1), Vector3.one);
 
     }
 
@@ -95,7 +96,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         PointerExit();
         _canAvailable = state;
-        _spriteRenderer.color = state ? Color.green : Color.gray;
+        _selectedImage.SetActive(state);
     }
 
     public bool CheckAvailableForChoose()
