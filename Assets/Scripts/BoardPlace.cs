@@ -4,12 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IDragHandler
+public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public int Id;
-    [field : SerializeField] protected bool _canAvailable = false;
+    [field: SerializeField] protected bool _canAvailable = false;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [field : SerializeField] protected List<Piece> _pieces;
+    [SerializeField] private GameObject _hoverObject;
+
+    [field: SerializeField] protected List<Piece> _pieces;
 
     private bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
@@ -30,7 +32,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
             return;
 
         print("düþtü");
-        MoveManager.Instance.OnDrop(this,TryGetComponent(out CollectPlace place));
+        MoveManager.Instance.OnDrop(this, TryGetComponent(out CollectPlace place));
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -91,8 +93,8 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public virtual void SetAvailable(bool state)
     {
+        PointerExit();
         _canAvailable = state;
-
         _spriteRenderer.color = state ? Color.green : Color.gray;
     }
 
@@ -120,5 +122,36 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public void OnDrag(PointerEventData eventData)
     {
 
+    }
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!_canAvailable)
+            return;
+
+        PointerEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!_canAvailable)
+            return;
+
+        PointerExit();
+    }
+
+    public virtual void PointerEnter()
+    {
+        if (_hoverObject != null)
+            _hoverObject.SetActive(true);
+        _pieces.ForEach(x => x.ToggleHover(true));
+    }
+
+    public virtual void PointerExit()
+    {
+        if (_hoverObject != null)
+            _hoverObject.SetActive(false);
+        _pieces.ForEach(x => x.ToggleHover(false));
     }
 }
