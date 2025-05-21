@@ -4,8 +4,4 @@ using UnityEngine;
 
 public class CollectPlace : BoardPlace
 {
-    public override void SetAvailable(bool state)
-    {
-        _canAvailable = state;
-    }
 }

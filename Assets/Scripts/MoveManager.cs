@@ -180,6 +180,9 @@ public class MoveManager : Singleton<MoveManager>
             var total = GameManager.CurrentPieceType == PieceType.White ? id - val : id + val;
             if (CheckPlace(total))
                 hasAnyPlace = true;
+
+            if (CheckPlaceForCollect(total))
+                hasAnyPlace = true;
         }
 
         if (!hasAnyPlace)
@@ -191,6 +194,7 @@ public class MoveManager : Singleton<MoveManager>
         {
             var total = GameManager.CurrentPieceType == PieceType.White ? id - totalValue : id + totalValue;
             CheckPlace(total);
+            CheckPlaceForCollect(total);
         }
 
         return true;
@@ -208,19 +212,22 @@ public class MoveManager : Singleton<MoveManager>
             }
         }
 
-        if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+        return false;
+    }
+
+    private bool CheckPlaceForCollect(int val)
+    {
+        if (!CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+            return false;
+
+        if (val == places.Count || val == -1)
         {
             Debug.LogError(GameManager.CurrentPieceType + " Can Collect : " + CheckPlayerCanCollectPieces(GameManager.CurrentPieceType) + " " + val);
-
-            if (val == places.Count || val == -1)
-            {
-                var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
-                if (currentPiece != null)
-                    place.SetAvailable(true);
-                return true;
-            }
+            var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
+            if (currentPiece != null)
+                place.SetAvailable(true);
+            return true;
         }
-
         return false;
     }
 
