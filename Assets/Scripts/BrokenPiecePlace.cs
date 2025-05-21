@@ -17,7 +17,7 @@ public class BrokenPiecePlace : BoardPlace
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
 
-        piece.transform.localPosition = Vector3.zero + Vector3.forward * 0.1f * (_pieces.Count - 1);
+        piece.MovePos(Vector3.zero + Vector3.forward * 0.1f * (_pieces.Count - 1), piece.transform.localEulerAngles);
     }
 
     public override void RemovePiece(Piece piece)

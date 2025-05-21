@@ -62,7 +62,6 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public virtual void AddPiece(Piece piece)
     {
         piece.transform.parent = transform;
-        piece.transform.localEulerAngles = Vector3.right * -90;
 
         if (_pieces.Count == 1 && _pieces[0].PieceType != piece.PieceType)
         {
@@ -72,7 +71,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
 
-        piece.transform.localPosition = Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1);
+        piece.MovePos(Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1), Vector3.right * -90);
 
     }
 
