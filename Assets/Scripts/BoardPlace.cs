@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IDragHandler
 {
     public int Id;
-    [SerializeField] private bool _canAvailable = false;
+    [field : SerializeField] protected bool _canAvailable = false;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private List<Piece> _pieces;
+    [field : SerializeField] protected List<Piece> _pieces;
 
     private bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
@@ -57,7 +57,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         MoveManager.Instance.CalculateAvailablePosses(Id);
     }
 
-    public void AddPiece(Piece piece)
+    public virtual void AddPiece(Piece piece)
     {
         piece.transform.parent = transform;
         piece.transform.localEulerAngles = Vector3.right * -90;
@@ -75,7 +75,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     }
 
-    public void RemovePiece(Piece piece)
+    public virtual void RemovePiece(Piece piece)
     {
         if (_pieces.Contains(piece))
             _pieces.Remove(piece);
@@ -89,12 +89,11 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         return false;
     }
 
-    public void SetAvailable(bool state)
+    public virtual void SetAvailable(bool state)
     {
         _canAvailable = state;
 
-        if (_spriteRenderer != null)
-            _spriteRenderer.color = state ? Color.green : Color.gray;
+        _spriteRenderer.color = state ? Color.green : Color.gray;
     }
 
     public bool CheckAvailableForChoose()

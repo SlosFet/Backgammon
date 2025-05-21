@@ -53,10 +53,9 @@ public class MoveManager : Singleton<MoveManager>
     public async void CheckPlaces()
     {
         List<BoardPlace> selectedPlaces = new List<BoardPlace>();
-        _brokenVariables.ForEach(x=>x.parent.SetAvailable(false));
+        _brokenVariables.ForEach(x => x.parent.SetAvailable(false));
 
         var broken = _brokenVariables.First(x => x.pieceType == GameManager.CurrentPieceType);
-        Debug.LogError(broken.parent.GetPieceCount > 0);
         broken.parent.SetAvailable(broken.parent.GetPieceCount > 0);
 
 
@@ -184,6 +183,7 @@ public class MoveManager : Singleton<MoveManager>
     public void AddBrokenPiece(Piece piece)
     {
         var broken = _brokenVariables.First(x => x.pieceType == piece.PieceType);
+        moves[^1].AddBrokenPiece(piece, piece.transform.parent.GetComponent<BoardPlace>());
         broken.parent.AddPiece(piece);
     }
 
@@ -205,6 +205,13 @@ public class MoveManager : Singleton<MoveManager>
         DiceManager.Instance.OnMoveReturn(move.moveVal);
         move.newPlace.RemovePiece(move.piece);
         move.oldPlace.AddPiece(move.piece);
+
+        if (move.brokenPiece != null)
+        {
+            _brokenVariables.First(x => x.pieceType == move.brokenPiece.PieceType).parent.RemovePiece(move.brokenPiece);
+            move.brokenPieceOldPlace.AddPiece(move.brokenPiece);
+        }
+
         moves.Remove(move);
 
         _returnButton.interactable = moves.Count > 0;
@@ -232,6 +239,8 @@ public class Move
     public BoardPlace oldPlace;
     public BoardPlace newPlace;
     public int moveVal;
+    public Piece brokenPiece;
+    public BoardPlace brokenPieceOldPlace;
 
     public Move(Piece piece, BoardPlace oldPlace, BoardPlace newPlace, int moveVal)
     {
@@ -239,5 +248,11 @@ public class Move
         this.oldPlace = oldPlace;
         this.newPlace = newPlace;
         this.moveVal = moveVal;
+    }
+
+    public void AddBrokenPiece(Piece brokenPiece, BoardPlace brokenPieceOldPlace)
+    {
+        this.brokenPiece = brokenPiece;
+        this.brokenPieceOldPlace = brokenPieceOldPlace;
     }
 }
