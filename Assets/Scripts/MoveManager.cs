@@ -74,7 +74,7 @@ public class MoveManager : Singleton<MoveManager>
         if (broken.parent.GetPieceCount > 0)
             canPlayerPlay = CheckForBroken(broken);
 
-        else if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+        else if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
             canPlayerPlay = CheckForCollect();
 
         else
@@ -181,7 +181,7 @@ public class MoveManager : Singleton<MoveManager>
             if (CheckPlace(total))
                 hasAnyPlace = true;
 
-            if (CheckPlaceForCollect(total))
+            if (CheckPlaceForCollect(total, id))
                 hasAnyPlace = true;
         }
 
@@ -194,7 +194,7 @@ public class MoveManager : Singleton<MoveManager>
         {
             var total = GameManager.CurrentPieceType == PieceType.White ? id - totalValue : id + totalValue;
             CheckPlace(total);
-            CheckPlaceForCollect(total);
+            CheckPlaceForCollect(total, id);
         }
 
         return true;
@@ -215,9 +215,16 @@ public class MoveManager : Singleton<MoveManager>
         return false;
     }
 
-    private bool CheckPlaceForCollect(int val)
+    private bool CheckPlaceForCollect(int val, int id)
     {
-        if (!CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+        var check = CheckPlayerCanCollectPieces(GameManager.CurrentPieceType);
+        print(check.Item2);
+        var places = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
+
+        if (!check.Item1 && check.Item2 > 1)
+            return false;
+
+        else if (check.Item2 == 1 && places.Contains(id))
             return false;
 
         if (val == places.Count || val == -1)
@@ -313,29 +320,34 @@ public class MoveManager : Singleton<MoveManager>
         CheckPlaces();
     }
 
-    private bool CheckPlayerCanCollectPieces(PieceType type)
+    //Ýlk parametre toplayabilir mi Ýkinci parametre kaç tane kaldý
+    private (bool, int) CheckPlayerCanCollectPieces(PieceType type)
     {
         bool canCollect = true;
+        int count = 0;
         var list = type == PieceType.White ? _whiteCollectIds : _blackCollectIds;
 
         if (_brokenVariables.First(x => x.pieceType == type).parent.GetPieceCount > 0)
-            return false;
+            return (false, 0);
 
         foreach (var place in places)
         {
             if (place.GetPieceCount > 0 && place.GetLastPieceType == type)
             {
                 if (!list.Contains(place.Id))
-                    return false;
+                {
+                    canCollect = false;
+                    count += place.GetPieceCount;
+                }
             }
         }
-        return canCollect;
+        return (canCollect, count);
     }
 
     public void CloseAllPlaces()
     {
         places.ForEach(x => x.SetAvailable(false));
-        _brokenVariables.ForEach(x=>x.parent.SetAvailable(false));
+        _brokenVariables.ForEach(x => x.parent.SetAvailable(false));
         _whiteCollectPlace.SetAvailable(false);
         _blackCollectPlace.SetAvailable(false);
     }
