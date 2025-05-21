@@ -218,7 +218,10 @@ public class MoveManager : Singleton<MoveManager>
     private bool CheckPlaceForCollect(int val, int id)
     {
         var check = CheckPlayerCanCollectPieces(GameManager.CurrentPieceType);
-        print(check.Item2);
+
+        if (check.Item1)
+            return CheckPlaceForCollectAlternate(val, id);
+
         var places = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
 
         if (!check.Item1 && check.Item2 > 1)
@@ -229,12 +232,40 @@ public class MoveManager : Singleton<MoveManager>
 
         if (val == places.Count || val == -1)
         {
-            Debug.LogError(GameManager.CurrentPieceType + " Can Collect : " + CheckPlayerCanCollectPieces(GameManager.CurrentPieceType) + " " + val);
             var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
             if (currentPiece != null)
                 place.SetAvailable(true);
             return true;
         }
+        return false;
+    }
+
+    private bool CheckPlaceForCollectAlternate(int val, int id)
+    {
+        var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
+
+        if (val == places.Count || val == -1)
+        {
+            if (currentPiece != null)
+                place.SetAvailable(true);
+            return true;
+        }
+
+        if (val > places.Count || val < -1)
+        {
+            var indexes = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
+            int startIndex = indexes.IndexOf(id);
+            for (int i = startIndex + 1; i < 6; i++)
+            {
+                if (places[indexes[i]].GetPieceCount > 0 && places[indexes[i]].GetLastPieceType == GameManager.CurrentPieceType)
+                    return false;
+            }
+
+            if (currentPiece != null)
+                place.SetAvailable(true);
+            return true;
+        }
+
         return false;
     }
 

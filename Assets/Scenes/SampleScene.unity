@@ -510,7 +510,7 @@ MonoBehaviour:
     parent: {fileID: 411283523}
     pieceType: 1
   _whiteCollectIds: 000000000100000002000000030000000400000005000000
-  _blackCollectIds: 120000001300000014000000150000001600000017000000
+  _blackCollectIds: 170000001600000015000000140000001300000012000000
   _whiteCollectPlace: {fileID: 2132844526}
   _blackCollectPlace: {fileID: 672412852}
   layer:
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceVal1: 6
-  diceVal2: 1
+  diceVal2: 2
   dice1Text: {fileID: 1129533976}
   dice2Text: {fileID: 1149409353}
   isCheatActive: 1
@@ -1899,12 +1899,12 @@ Transform:
   m_GameObject: {fileID: 878229677}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.5815089, y: -0.2330015, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2330015, z: 0}
   m_LocalScale: {x: 7.0254345, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1316107959}
-  m_Father: {fileID: 1743978372}
+  m_Father: {fileID: 1962190058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &878229679
 MonoBehaviour:
@@ -3012,12 +3012,12 @@ Transform:
   m_GameObject: {fileID: 1552114329}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.2330015, z: 0}
+  m_LocalPosition: {x: -3.5815089, y: -0.2330015, z: 0}
   m_LocalScale: {x: 7.0254345, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 698030373}
-  m_Father: {fileID: 1962190058}
+  m_Father: {fileID: 1743978372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1602060308
 GameObject:
@@ -4109,7 +4109,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3934514310820962842, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 878229678}
+      addedObject: {fileID: 1552114331}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
 --- !u!4 &2141113956 stripped
@@ -4556,7 +4556,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 511042995823995385, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1552114331}
+      addedObject: {fileID: 878229678}
     - targetCorrespondingSourceObject: {fileID: 3934514310820962842, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 681165217}
