@@ -334,7 +334,7 @@ public class MoveManager : Singleton<MoveManager>
         if (currentPiece != null && currentPiece.transform.parent == place.transform)
         {
             CloseAllPlaces();
-            var list = DiceManager.Instance.Values.OrderByDescending(x => x).ToList();
+            var list = DiceManager.Instance.Values.OrderBy(x => x).ToList();
 
             foreach (var val in list)
             {
