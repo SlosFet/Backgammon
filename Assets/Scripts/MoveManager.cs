@@ -334,7 +334,27 @@ public class MoveManager : Singleton<MoveManager>
         if (currentPiece != null && currentPiece.transform.parent == place.transform)
         {
             CloseAllPlaces();
-            place.AddPiece(currentPiece);
+            var list = DiceManager.Instance.Values.OrderByDescending(x => x).ToList();
+
+            foreach (var val in list)
+            {
+                var total = GameManager.CurrentPieceType == PieceType.White ? place.Id - val : place.Id + val;
+
+                if (total <= -1 && CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
+                    OnDrop(_whiteCollectPlace, true);
+
+                else if (total >= places.Count && CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
+                    OnDrop(_blackCollectPlace, true);
+
+                else if (total >= 0 && total < places.Count && places[total].CheckAvailable())
+                    OnDrop(places[total], false);
+
+                else
+                    continue;
+
+                break;
+            }
+
             currentPiece = null;
         }
 

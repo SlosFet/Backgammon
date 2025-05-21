@@ -1464,8 +1464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5203244ad2669b4889cbe795dce79ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceVal1: 1
-  diceVal2: 1
+  diceVal1: 2
+  diceVal2: 2
   dice1Text: {fileID: 1129533976}
   dice2Text: {fileID: 1149409353}
   isCheatActive: 1
