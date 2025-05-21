@@ -16,7 +16,7 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] private bool isCheatActive = false;
     [SerializeField] private Button _rollButton;
 
-    private bool isEqual => diceVal1 == diceVal2;
+    public bool isEqual => diceVal1 == diceVal2;
     public int GetRealTotalValue => diceVal1 + diceVal2;
 
     public List<int> Values;

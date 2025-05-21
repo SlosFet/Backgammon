@@ -177,12 +177,17 @@ public class MoveManager : Singleton<MoveManager>
         bool hasAnyPlace = false;
         foreach (int val in DiceManager.Instance.Values)
         {
-            var total = GameManager.CurrentPieceType == PieceType.White ? id - val : id + val;
-            if (CheckPlace(total))
-                hasAnyPlace = true;
+            bool checkForEqual = false;
 
-            if (CheckPlaceForCollect(total, id))
+            var total = GameManager.CurrentPieceType == PieceType.White ? id - val : id + val;
+            if (CheckPlace(total) || CheckPlaceForCollect(total, id))
+            {
+                checkForEqual = true;
                 hasAnyPlace = true;
+            }
+
+            if (DiceManager.Instance.isEqual && !checkForEqual)
+                break;
         }
 
         if (!hasAnyPlace)
@@ -312,9 +317,9 @@ public class MoveManager : Singleton<MoveManager>
         oldPlace.RemovePiece(currentPiece);
         place.AddPiece(currentPiece);
 
-        if (moveVal == DiceManager.Instance.GetRealTotalValue)
+        if (moveVal == DiceManager.Instance.GetRealTotalValue || (DiceManager.Instance.isEqual && moveVal > DiceManager.Instance.diceVal1))
         {
-            BrokePiecesOnFastMove(oldPlace.Id);
+            BrokePiecesOnFastMove(oldPlace.Id, moveVal);
         }
 
         DiceManager.Instance.OnPiecePlaced(moveVal);
@@ -413,18 +418,36 @@ public class MoveManager : Singleton<MoveManager>
         _blackCollectPlace.SetAvailable(false);
     }
 
-    private void BrokePiecesOnFastMove(int startId)
+    private void BrokePiecesOnFastMove(int startId,int moveVal)
     {
-        foreach (var val in DiceManager.Instance.Values)
+        print("Check piç");
+        var list = new List<int>();
+        list.AddRange(DiceManager.Instance.Values);
+
+        if (DiceManager.Instance.isEqual)
+        {
+            List<int> removeIds = new List<int>();
+            foreach (var index in list)
+            {
+                if (index >= moveVal)
+                    removeIds.Add(index);
+            }
+            foreach (var id in removeIds)
+            {
+                list.Remove(id);
+            }
+        }
+
+        foreach (var val in list)
         {
             var total = GameManager.CurrentPieceType == PieceType.White ? startId - val : startId + val;
-            if (val < places.Count && val >= 0)
+            if (total < places.Count && total >= 0)
             {
-                if (places[val].GetPieceCount == 1 && places[val].GetLastPieceType != GameManager.CurrentPieceType)
+                if (places[total].GetPieceCount == 1 && places[total].GetLastPieceType != GameManager.CurrentPieceType)
                 {
                     print("Checking");
 
-                    places[val].Broke();
+                    places[total].Broke();
                 }
             }
         }
