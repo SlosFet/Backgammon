@@ -284,18 +284,29 @@ public class MoveManager : Singleton<MoveManager>
 
         if (isCollectedPiece && !DiceManager.Instance.Values.Contains(moveVal))
         {
+            bool hasChanged = false;
             var list = DiceManager.Instance.Values.OrderBy(x => x).ToList();
             foreach (var item in list)
             {
                 if (item > moveVal)
                 {
                     moveVal = item;
+                    hasChanged = true;
                     break;
                 }
             }
+
+            if (!hasChanged)
+                moveVal = DiceManager.Instance.TotalValue;
         }
 
         Move move = new Move(currentPiece, oldPlace, place, moveVal);
+
+        if(moveVal == DiceManager.Instance.TotalValue)
+        {
+            BrokePiecesOnFastMove(oldPlace.Id);
+        }
+
         DiceManager.Instance.OnPiecePlaced(moveVal);
 
         moves.Add(move);
@@ -395,6 +406,11 @@ public class MoveManager : Singleton<MoveManager>
         _brokenVariables.ForEach(x => x.parent.SetAvailable(false));
         _whiteCollectPlace.SetAvailable(false);
         _blackCollectPlace.SetAvailable(false);
+    }
+    
+    private void BrokePiecesOnFastMove(int startId)
+    {
+
     }
 }
 
