@@ -88,8 +88,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spacing: 0.2
   startY: -0.4
-  maxVisiblePieces: 3
+  maxVisiblePieces: 6
   zOffsetPerPiece: -0.003
+  targetRot: {x: 0, y: 0, z: 0}
 --- !u!1 &5810318380449105702
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 240;
+        QualitySettings.vSyncCount = 1;
         CurrentPieceType = StartPieceType;
     }
 
