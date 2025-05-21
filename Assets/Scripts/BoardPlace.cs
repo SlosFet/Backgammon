@@ -55,6 +55,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         print("Bastý");
         hasSelected = true;
         MoveManager.Instance.SetCurrentPiece(_pieces[^1]);
+        MoveManager.Instance.CloseAllPlaces();
         MoveManager.Instance.CalculateAvailablePosses(Id);
     }
 

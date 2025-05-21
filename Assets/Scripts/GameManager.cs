@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         Application.targetFrameRate = 60;
-        CurrentPieceType = PieceType.White;
+        CurrentPieceType = PieceType.Black;
     }
 
     public void TourDone()

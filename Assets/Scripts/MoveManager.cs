@@ -11,15 +11,24 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private Piece currentPiece;
     [SerializeField] private List<BoardPlace> places;
 
+
     [SerializeField] private Button _doneButton;
     [SerializeField] private Button _returnButton;
 
+
     [SerializeField] private List<Move> moves;
+
 
     [SerializeField] private List<BrokenVariables> _brokenVariables;
 
+
     [SerializeField] private List<int> _whiteCollectIds;
     [SerializeField] private List<int> _blackCollectIds;
+
+
+    [SerializeField] private BoardPlace _whiteCollectPlace;
+    [SerializeField] private BoardPlace _blackCollectPlace;
+
 
     public LayerMask layer;
     public bool HasPiece => currentPiece != null;
@@ -55,42 +64,30 @@ public class MoveManager : Singleton<MoveManager>
 
     public void CheckPlaces()
     {
-        Debug.LogError(GameManager.CurrentPieceType + " Can Collect : " + CheckPlayerCanCollectPieces(GameManager.CurrentPieceType));
-        List<BoardPlace> selectedPlaces = new List<BoardPlace>();
-        _brokenVariables.ForEach(x => x.parent.SetAvailable(false));
+        CloseAllPlaces();
 
         var broken = _brokenVariables.First(x => x.pieceType == GameManager.CurrentPieceType);
-        broken.parent.SetAvailable(broken.parent.GetPieceCount > 0);
+
+        bool canPlayerPlay = false;
 
 
-        var selectedList = broken.parent.GetPieceCount <= 0 ?
-            places :
-            broken.places;
+        if (broken.parent.GetPieceCount > 0)
+            canPlayerPlay = CheckForBroken(broken);
 
-        foreach (var place in places)
+        else if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+            canPlayerPlay = CheckForCollect();
+
+        else
+            canPlayerPlay = CheckForNormal();
+
+
+        if (!canPlayerPlay)
         {
-            if (!place.CheckAvailableForChoose())
-                continue;
-
-            if (CalculateAvailablePosses(place.Id))
-            {
-                selectedPlaces.Add(place);
-            }
-        }
-
-        if (broken.parent.GetPieceCount <= 0)
-        {
-            foreach (var place in selectedPlaces)
-            {
-                place.SetAvailableForChoose();
-            }
-        }
-
-
-        if (selectedPlaces.Count <= 0)
-        {
+            //Eðer zar ilk atýldýðýnda check ediliyor ve oynanacak yer yoksa sýra otomatik olarak geçer
             if (isFirstCheck)
                 Invoke(nameof(MoveDone), 1);
+
+            //Deðilse oyuncuya taþýný geri almasý veya tamamlamasý için hak sunulur
             else
                 _doneButton.interactable = true;
         }
@@ -98,9 +95,85 @@ public class MoveManager : Singleton<MoveManager>
         isFirstCheck = false;
     }
 
+    private bool CheckForNormal()
+    {
+        List<BoardPlace> selectedPlaces = new List<BoardPlace>();
+
+        //Önce masadaki bütün yerleri kontrol eder
+        foreach (var place in places)
+        {
+            //Eðer yer sýradaki oyuncu için uygun taþ barýndýrmýyor veya boþsa döngüye devam eder
+            if (!place.CheckAvailableForChoose())
+                continue;
+
+            //Yerdeki taþ gelen zara göre hareket edebilir mi kontrol eder
+            if (CalculateAvailablePosses(place.Id))
+            {
+                selectedPlaces.Add(place);
+            }
+        }
+
+        //Hareket ettirilebilen taþ olan yerler mavi ýþýkla oyuncuya gösterilir
+        foreach (var place in selectedPlaces)
+        {
+            place.SetAvailableForChoose();
+        }
+
+        //Oyuncunun hareketinin olup olmadýðý kontrol edilir
+        return selectedPlaces.Count > 0;
+    }
+
+    private bool CheckForBroken(BrokenVariables broken)
+    {
+        //Oyuncunun kýrýk taþýnýn bulunduðu id den yerleþim yerlerine konulabilir mi bakar
+        if (CalculateAvailablePosses(broken.parent.Id))
+        {
+            //Eðer konulabiliyorsa set eder
+            broken.parent.SetAvailable(true);
+
+            //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
+            foreach (int val in DiceManager.Instance.Values)
+            {
+                var total = GameManager.CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
+                CheckPlace(total);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CheckForCollect()
+    {
+        List<BoardPlace> selectedPlaces = new List<BoardPlace>();
+
+        //Önce masadaki bütün yerleri kontrol eder
+        foreach (var place in places)
+        {
+            //Eðer yer sýradaki oyuncu için uygun taþ barýndýrmýyor veya boþsa döngüye devam eder
+            if (!place.CheckAvailableForChoose())
+                continue;
+
+            //Yerdeki taþ gelen zara göre hareket edebilir mi kontrol eder
+            if (CalculateAvailablePosses(place.Id))
+            {
+                selectedPlaces.Add(place);
+            }
+        }
+
+        //Hareket ettirilebilen taþ olan yerler mavi ýþýkla oyuncuya gösterilir
+        foreach (var place in selectedPlaces)
+        {
+            place.SetAvailableForChoose();
+        }
+
+        //Oyuncunun hareketinin olup olmadýðý kontrol edilir
+        return selectedPlaces.Count > 0;
+    }
+
     public bool CalculateAvailablePosses(int id)
     {
-        places.ForEach(x => x.SetAvailable(false));
         bool hasAnyPlace = false;
         foreach (int val in DiceManager.Instance.Values)
         {
@@ -135,6 +208,19 @@ public class MoveManager : Singleton<MoveManager>
             }
         }
 
+        if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType))
+        {
+            Debug.LogError(GameManager.CurrentPieceType + " Can Collect : " + CheckPlayerCanCollectPieces(GameManager.CurrentPieceType) + " " + val);
+
+            if (val == places.Count || val == -1)
+            {
+                var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
+                if (currentPiece != null)
+                    place.SetAvailable(true);
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -158,7 +244,7 @@ public class MoveManager : Singleton<MoveManager>
         oldPlace.RemovePiece(currentPiece);
         place.AddPiece(currentPiece);
 
-        places.ForEach(x => x.SetAvailable(false));
+        CloseAllPlaces();
         currentPiece = null;
     }
 
@@ -167,7 +253,7 @@ public class MoveManager : Singleton<MoveManager>
         await Task.Delay(10);
         if (currentPiece != null && currentPiece.transform.parent == place.transform)
         {
-            places.ForEach(x => x.SetAvailable(false));
+            CloseAllPlaces();
             place.AddPiece(currentPiece);
             currentPiece = null;
         }
@@ -230,13 +316,21 @@ public class MoveManager : Singleton<MoveManager>
 
         foreach (var place in places)
         {
-            if(place.GetPieceCount > 0 && place.GetLastPieceType == type)
+            if (place.GetPieceCount > 0 && place.GetLastPieceType == type)
             {
                 if (!list.Contains(place.Id))
                     return false;
             }
         }
         return canCollect;
+    }
+
+    public void CloseAllPlaces()
+    {
+        places.ForEach(x => x.SetAvailable(false));
+        _brokenVariables.ForEach(x=>x.parent.SetAvailable(false));
+        _whiteCollectPlace.SetAvailable(false);
+        _blackCollectPlace.SetAvailable(false);
     }
 }
 
