@@ -28,10 +28,7 @@ public class BrokenPiecePlace : BoardPlace
     public override void SetAvailable(bool state)
     {
         _canAvailable = state;
-        if (state)
-            _pieces[^1].ToggleHover(true);
-        else
-            base.PointerExit();
+        base.PointerExit();
     }
 
 }
