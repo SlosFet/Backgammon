@@ -14,8 +14,9 @@ public class CollectPlace : BoardPlace
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
 
-        piece.MovePos(Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1), Vector3.right * 90);
+        GetComponent<PiecePlacer>().PlacePieces(_pieces);
 
         _text.text = GetPieceCount.ToString();
     }
+
 }

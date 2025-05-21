@@ -17,6 +17,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     private bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
     public PieceType GetLastPieceType => _pieces[0].PieceType;
+    public List<Piece> GetPieces => _pieces;
 
     private void Start()
     {
@@ -74,7 +75,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!_pieces.Contains(piece))
             _pieces.Add(piece);
 
-        piece.MovePos(Vector3.zero + Vector3.up * 0.1f * (_pieces.Count - 1), Vector3.one);
+        GetComponent<PiecePlacer>().PlacePieces(_pieces);
 
     }
 
@@ -82,6 +83,8 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         if (_pieces.Contains(piece))
             _pieces.Remove(piece);
+
+        GetComponent<PiecePlacer>().PlacePieces(_pieces);
     }
 
     public bool CheckAvailable()

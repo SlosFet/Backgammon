@@ -22,7 +22,9 @@ public class BrokenPiecePlace : BoardPlace
 
     public override void RemovePiece(Piece piece)
     {
-        base.RemovePiece(piece);
+        if (_pieces.Contains(piece))
+            _pieces.Remove(piece);
+
         _text.text = GetPieceCount.ToString();
         _text.gameObject.SetActive(GetPieceCount > 1);
     }
