@@ -66,8 +66,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
         if (_pieces.Count == 1 && _pieces[0].PieceType != piece.PieceType)
         {
-            MoveManager.Instance.AddBrokenPiece(_pieces[0]);
-            _pieces.RemoveAt(0);
+            Broke();
         }
 
         if (!_pieces.Contains(piece))
@@ -113,6 +112,11 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         _spriteRenderer.color = Color.blue;
     }
 
+    public void Broke()
+    {
+        MoveManager.Instance.AddBrokenPiece(_pieces[0]);
+        _pieces.RemoveAt(0);
+    }
 
     public void OnDrag(PointerEventData eventData)
     {

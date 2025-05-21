@@ -219,19 +219,24 @@ public class MoveManager : Singleton<MoveManager>
     {
         var check = CheckPlayerCanCollectPieces(GameManager.CurrentPieceType);
 
+
         if (check.Item1)
             return CheckPlaceForCollectAlternate(val, id);
 
-        var places = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
+        var _places = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
 
         if (!check.Item1 && check.Item2 > 1)
             return false;
 
-        else if (check.Item2 == 1 && places.Contains(id))
+        else if (check.Item2 == 1 && _places.Contains(id))
             return false;
+
+
 
         if (val == places.Count || val == -1)
         {
+            print(val);
+
             var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
             if (currentPiece != null)
                 place.SetAvailable(true);
@@ -302,17 +307,17 @@ public class MoveManager : Singleton<MoveManager>
 
         Move move = new Move(currentPiece, oldPlace, place, moveVal);
 
-        if(moveVal == DiceManager.Instance.TotalValue)
+        moves.Add(move);
+
+        oldPlace.RemovePiece(currentPiece);
+        place.AddPiece(currentPiece);
+
+        if (moveVal == DiceManager.Instance.GetRealTotalValue)
         {
             BrokePiecesOnFastMove(oldPlace.Id);
         }
 
         DiceManager.Instance.OnPiecePlaced(moveVal);
-
-        moves.Add(move);
-
-        oldPlace.RemovePiece(currentPiece);
-        place.AddPiece(currentPiece);
 
         CloseAllPlaces();
         currentPiece = null;
@@ -407,10 +412,22 @@ public class MoveManager : Singleton<MoveManager>
         _whiteCollectPlace.SetAvailable(false);
         _blackCollectPlace.SetAvailable(false);
     }
-    
+
     private void BrokePiecesOnFastMove(int startId)
     {
+        foreach (var val in DiceManager.Instance.Values)
+        {
+            var total = GameManager.CurrentPieceType == PieceType.White ? startId - val : startId + val;
+            if (val < places.Count && val >= 0)
+            {
+                if (places[val].GetPieceCount == 1 && places[val].GetLastPieceType != GameManager.CurrentPieceType)
+                {
+                    print("Checking");
 
+                    places[val].Broke();
+                }
+            }
+        }
     }
 }
 
