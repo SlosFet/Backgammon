@@ -14,10 +14,13 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] private TextMeshProUGUI dice2Text;
 
     [SerializeField] private bool isCheatActive = false;
-    [SerializeField] private Button _rollButton;
+    [SerializeField] private List<Button> _rollButtons;
 
-    [SerializeField] private Dice _dice1;
-    [SerializeField] private Dice _dice2;
+    [SerializeField] private Dice _whiteDice1;
+    [SerializeField] private Dice _whiteDice2;
+
+    [SerializeField] private Dice _blackDice1;
+    [SerializeField] private Dice _blackDice2;
 
     public bool isEqual => diceVal1 == diceVal2;
     public int GetRealTotalValue => diceVal1 + diceVal2;
@@ -28,7 +31,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private void Start()
     {
-        _rollButton.onClick.AddListener(RollDices);
+        _rollButtons.ForEach(x=>x.onClick.AddListener(RollDices));
     }
     public void SetPlaces()
     {
@@ -51,15 +54,25 @@ public class DiceManager : Singleton<DiceManager>
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
-        _dice1.Roll(diceVal1);
-        _dice2.Roll(diceVal2);
+
+        print("Sent values : " + diceVal1 + " " + diceVal2);
+        if(GameManager.CurrentPieceType == PieceType.White)
+        {
+            _whiteDice1.Roll(diceVal1);
+            _whiteDice2.Roll(diceVal2);
+        }
+        else
+        {
+            _blackDice1.Roll(diceVal1);
+            _blackDice2.Roll(diceVal2);
+        }
 
         dice1Text.text = diceVal1.ToString();
         dice2Text.text = diceVal2.ToString();
 
         SetPlaces();
 
-        _rollButton.gameObject.SetActive(false);
+        _rollButtons.ForEach(x => x.gameObject.SetActive(false));
         MoveManager.Instance.CheckPlaces();
     }
 
@@ -125,8 +138,11 @@ public class DiceManager : Singleton<DiceManager>
 
     public void OnTourDone()
     {
-        _dice1.gameObject.SetActive(false);
-        _dice2.gameObject.SetActive(false);
-        _rollButton.gameObject.SetActive(true);
+        _whiteDice1.gameObject.SetActive(false);
+        _whiteDice2.gameObject.SetActive(false);
+        _blackDice1.gameObject.SetActive(false);
+        _blackDice2.gameObject.SetActive(false);
+
+        _rollButtons[(int)GameManager.CurrentPieceType].gameObject.SetActive(true);
     }
 }

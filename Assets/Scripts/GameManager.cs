@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
         Application.targetFrameRate = 240;
         QualitySettings.vSyncCount = 1;
         CurrentPieceType = StartPieceType;
+        DiceManager.Instance.OnTourDone();
     }
 
     public void TourDone()
