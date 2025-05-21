@@ -10,9 +10,6 @@ public class DiceManager : Singleton<DiceManager>
     public int diceVal1;
     public int diceVal2;
 
-    [SerializeField] private TextMeshProUGUI dice1Text;
-    [SerializeField] private TextMeshProUGUI dice2Text;
-
     [SerializeField] private bool isCheatActive = false;
     [SerializeField] private List<Button> _rollButtons;
 
@@ -54,6 +51,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
+        _rollButtons.ForEach(x => x.gameObject.SetActive(false));
 
         print("Sent values : " + diceVal1 + " " + diceVal2);
         if (GameManager.CurrentPieceType == PieceType.White)
@@ -67,12 +65,8 @@ public class DiceManager : Singleton<DiceManager>
             await _blackDice2.Roll(diceVal2);
         }
 
-        dice1Text.text = diceVal1.ToString();
-        dice2Text.text = diceVal2.ToString();
-
         SetPlaces();
 
-        _rollButtons.ForEach(x => x.gameObject.SetActive(false));
         MoveManager.Instance.CheckPlaces();
     }
 
