@@ -1108,6 +1108,10 @@ PrefabInstance:
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4111037175269103762, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: isCheatActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4291704019360477464, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0

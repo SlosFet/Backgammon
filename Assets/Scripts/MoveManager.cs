@@ -39,7 +39,7 @@ public class MoveManager : MonoBehaviour
             places[i].MoveManager = this;
         }
 
-        _brokenVariables.ForEach(x=>x.parent.MoveManager = this);
+        _brokenVariables.ForEach(x => x.parent.MoveManager = this);
         _whiteCollectPlace.MoveManager = this;
         _blackCollectPlace.MoveManager = this;
 
@@ -50,7 +50,7 @@ public class MoveManager : MonoBehaviour
         _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
 
         _boardCanvas.SubscribeToRestart(Restart);
-        _boardCanvas.SubscribeToDoneReturn(MoveBack,MoveDone);
+        _boardCanvas.SubscribeToDoneReturn(MoveBack, MoveDone);
 
         SetType();
     }
@@ -109,7 +109,7 @@ public class MoveManager : MonoBehaviour
 
             //Deðilse oyuncuya taþýný geri almasý veya tamamlamasý için hak sunulur
             else
-                 _boardCanvas.ToggleDoneButton(true);
+                _boardCanvas.ToggleDoneButton(true);
         }
 
         isFirstCheck = false;
@@ -145,23 +145,47 @@ public class MoveManager : MonoBehaviour
 
     private bool CheckForBroken(BrokenVariables broken)
     {
-        //Oyuncunun kýrýk taþýnýn bulunduðu id den yerleþim yerlerine konulabilir mi bakar
-        if (CalculateAvailablePosses(broken.parent.Id))
+        bool hasPlace = false;
+
+
+        for (int i = 0; i < 2; i++)
         {
-            //Eðer konulabiliyorsa set eder
-            broken.parent.SetAvailable(true);
+            print("CHECK");
+            var total = (i == 0 ? DiceManager.diceVal1 : DiceManager.diceVal2) - 1;
 
-            //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
-            foreach (int val in DiceManager.Values)
+            if (i == 0 && !DiceManager.Values.Contains(DiceManager.diceVal1))
+                continue;
+
+            if (i == 1 && !DiceManager.Values.Contains(DiceManager.diceVal2))
+                continue;
+
+            if (CheckPlace(broken.places[total].Id))
             {
-                var total = CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
-                CheckPlace(total);
+                broken.parent.SetAvailable(true);
+                hasPlace = true;
             }
-
-            return true;
         }
 
-        return false;
+
+
+
+        ////Oyuncunun kýrýk taþýnýn bulunduðu id den yerleþim yerlerine konulabilir mi bakar
+        //if (CalculateAvailablePosses(broken.parent.Id))
+        //{
+        //    //Eðer konulabiliyorsa set eder
+        //    broken.parent.SetAvailable(true);
+
+        //    //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
+        //    foreach (int val in DiceManager.Values)
+        //    {
+        //        var total = CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
+        //        CheckPlace(total);
+        //    }
+
+        //    return true;
+        //}
+
+        return hasPlace;
     }
 
     private bool CheckForCollect()
@@ -302,12 +326,12 @@ public class MoveManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             var pieces = GameObject.FindObjectsOfType<Piece>();
             foreach (var piece in pieces)
             {
-                if(piece.PieceType == PieceType.Black)
+                if (piece.PieceType == PieceType.Black)
                 {
                     _blackCollectPlace.AddPiece(piece);
                 }
@@ -369,7 +393,7 @@ public class MoveManager : MonoBehaviour
         if (currentPiece != null && currentPiece.transform.parent == place.transform)
         {
             CloseAllPlaces();
-            var list = DiceManager.Values.OrderBy(x => x).ToList();
+            var list = DiceManager.Values.OrderByDescending(x => x).ToList();
 
             foreach (var val in list)
             {
@@ -479,7 +503,7 @@ public class MoveManager : MonoBehaviour
         _blackCollectPlace.SetAvailable(false);
     }
 
-    private void BrokePiecesOnFastMove(int startId,int moveVal)
+    private void BrokePiecesOnFastMove(int startId, int moveVal)
     {
         print("Check piç");
         var list = new List<int>();
@@ -518,7 +542,7 @@ public class MoveManager : MonoBehaviour
     {
         places.ForEach(x => x.RemoveAllPieces());
         places.ForEach(x => x.AddStartPieces());
-        _brokenVariables.ForEach(x=>x.parent.RemoveAllPieces());
+        _brokenVariables.ForEach(x => x.parent.RemoveAllPieces());
         _whiteCollectPlace.RemoveAllPieces();
         _blackCollectPlace.RemoveAllPieces();
         moves.Clear();

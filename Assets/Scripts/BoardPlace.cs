@@ -17,7 +17,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     [field: SerializeField] protected List<Piece> _startPieces;
 
-    private bool hasSelected = false;
+    protected bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
     public PieceType GetLastPieceType => _pieces[0].PieceType;
     public List<Piece> GetPieces => _pieces;
@@ -51,6 +51,11 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     }
 
     public void OnPointerDown(PointerEventData eventData)
+    {
+        MyOnPointerDown();
+    }
+
+    public virtual void MyOnPointerDown()
     {
         if (MoveManager.HasPiece || !_canAvailable)
             return;
