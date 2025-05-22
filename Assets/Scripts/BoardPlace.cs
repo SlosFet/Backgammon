@@ -52,10 +52,10 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        MyOnPointerDown();
+        MyOnPointerDown(eventData.pointerId);
     }
 
-    public virtual void MyOnPointerDown()
+    public virtual void MyOnPointerDown(int pointerId)
     {
         if (MoveManager.HasPiece || !_canAvailable)
             return;
@@ -64,7 +64,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
             return;
 
         hasSelected = true;
-        MoveManager.SetCurrentPiece(_pieces[^1]);
+        MoveManager.SetCurrentPiece(_pieces[^1], pointerId);
         MoveManager.CloseAllPlaces();
         MoveManager.CalculateAvailablePosses(Id);
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class MoveManager : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class MoveManager : MonoBehaviour
     public PieceType CurrentPieceType;
     public bool HasPiece => currentPiece != null;
     private bool isFirstCheck = true;
+    private int fingerId;
 
     private void Start()
     {
@@ -64,18 +66,39 @@ public class MoveManager : MonoBehaviour
 
     public Vector3 GetMousePos()
     {
-        Vector3 pos = Vector3.forward * -0.2f;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 rayPos = Vector3.zero;
+
+        if (Input.touchCount == 0)
+        {
+            rayPos = Input.mousePosition;
+           
+        }
+        
+        else
+        {
+            foreach (var touch in Input.touches)
+            {
+                if(touch.fingerId == fingerId)
+                {
+                    rayPos = touch.position;
+                    break;
+                }    
+            }
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(rayPos);
+
         if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layer))
         {
             return hitInfo.point - (ray.direction * distance);
         }
 
-        return pos;
+        return Vector3.zero;
     }
 
-    public void SetCurrentPiece(Piece piece)
+    public void SetCurrentPiece(Piece piece,int pointerId)
     {
+        fingerId = pointerId;
         SoundManager.Instance.PlaySound(SoundTypes.TakeSound);
         currentPiece = piece;
         _boardCanvas.ToggleReturnButton(false);

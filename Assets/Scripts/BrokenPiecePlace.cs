@@ -35,7 +35,7 @@ public class BrokenPiecePlace : BoardPlace
         base.PointerExit();
     }
 
-    public override void MyOnPointerDown()
+    public override void MyOnPointerDown(int pointerId)
     {
         if (MoveManager.HasPiece || !_canAvailable)
             return;
@@ -44,7 +44,7 @@ public class BrokenPiecePlace : BoardPlace
             return;
 
         hasSelected = true;
-        MoveManager.SetCurrentPiece(_pieces[^1]);
+        MoveManager.SetCurrentPiece(_pieces[^1],pointerId);
         MoveManager.CheckPlaces();
     }
 }
