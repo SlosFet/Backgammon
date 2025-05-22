@@ -53,6 +53,7 @@ MonoBehaviour:
   _selectedImage: {fileID: 8008485385042674699}
   _hoverObject: {fileID: 5810318380449105702}
   _pieces: []
+  _startPieces: []
 --- !u!65 &8972502587811447730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,8 +73,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 1.0000002, z: 0.20000005}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.25, y: 1.6112338, z: 0.20000005}
+  m_Center: {x: 0, y: 0.30561686, z: 7.903639e-16}
 --- !u!114 &6269056281712632235
 MonoBehaviour:
   m_ObjectHideFlags: 0

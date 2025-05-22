@@ -8,29 +8,29 @@ using UnityEngine.UI;
 public class BoardCanvas : MonoBehaviour
 {
 
-    [SerializeField] private List<CanvasItems> _canvasItems;
+    [SerializeField] private List<BoardCanvasItems> _canvasItems;
 
     public void OpenWinPanel(PieceType pieceType)
     {
         GameManager.CurrentPieceType = pieceType;
-        _canvasItems.First(x=>x.PieceType == pieceType).WinPanel.SetActive(true);
+        _canvasItems.First(x=>x.PieceType == pieceType).TogglewWinPanel(true);
     }
 
     public void CloseWinPanel(PieceType pieceType)
     {
-        _canvasItems.First(x => x.PieceType == pieceType).WinPanel.SetActive(false);
+        _canvasItems.First(x => x.PieceType == pieceType).TogglewWinPanel(false);
     }
 
     public void SubscribeToRestart(UnityAction action)
     {
-        _canvasItems.ForEach(x=>x.RestartButtons.ForEach(b=>b.onClick.AddListener(action)));
+        _canvasItems.ForEach(x=>x.AddFunctionToRestartButtons(action));
     }
-}
 
-[System.Serializable]
-public struct CanvasItems
-{
-    public PieceType PieceType;
-    public GameObject WinPanel;
-    public List<Button> RestartButtons;
+    public void SubscribeToRoll(UnityAction action) => _canvasItems.ForEach(x => x.SetRollFunction(action));
+    public void SubscribeToDoneReturn(UnityAction Return, UnityAction Done) => _canvasItems.ForEach(x => x.SetFunctions(Return,Done));
+
+    public void ToggleRollButton(bool state) => _canvasItems.First(x => x.PieceType == GameManager.CurrentPieceType).ToggleRollButton(state);
+    public void ToggleReturnButton(bool state) => _canvasItems.First(x => x.PieceType == GameManager.CurrentPieceType).ToggleReturnButton(state);
+    public void ToggleDoneButton(bool state) => _canvasItems.First(x => x.PieceType == GameManager.CurrentPieceType).ToggleDoneButton(state);
+
 }

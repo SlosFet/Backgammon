@@ -11,7 +11,7 @@ public class DiceManager : Singleton<DiceManager>
     public int diceVal2;
 
     [SerializeField] private bool isCheatActive = false;
-    [SerializeField] private List<Button> _rollButtons;
+    [SerializeField] private BoardCanvas _boardCanvas;
 
     [SerializeField] private Dice _whiteDice1;
     [SerializeField] private Dice _whiteDice2;
@@ -28,7 +28,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private void Start()
     {
-        _rollButtons.ForEach(x => x.onClick.AddListener(RollDices));
+        _boardCanvas.SubscribeToRoll(RollDices);
     }
     public void SetPlaces()
     {
@@ -51,7 +51,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
-        _rollButtons.ForEach(x => x.gameObject.SetActive(false));
+        _boardCanvas.ToggleRollButton(false);
 
         print("Sent values : " + diceVal1 + " " + diceVal2);
         if (GameManager.CurrentPieceType == PieceType.White)
@@ -138,7 +138,7 @@ public class DiceManager : Singleton<DiceManager>
         _blackDice1.gameObject.SetActive(false);
         _blackDice2.gameObject.SetActive(false);
 
-        _rollButtons[(int)GameManager.CurrentPieceType].gameObject.SetActive(true);
+        _boardCanvas.ToggleRollButton(true);
     }
 
     public void SetFill(int val)

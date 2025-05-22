@@ -11,16 +11,9 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private Piece currentPiece;
     [SerializeField] private List<BoardPlace> places;
 
-
-    [SerializeField] private Button _doneButton;
-    [SerializeField] private Button _returnButton;
-
-
     [SerializeField] private List<Move> moves;
 
-
     [SerializeField] private List<BrokenVariables> _brokenVariables;
-
 
     [SerializeField] private List<int> _whiteCollectIds;
     [SerializeField] private List<int> _blackCollectIds;
@@ -38,8 +31,6 @@ public class MoveManager : Singleton<MoveManager>
 
     private void Start()
     {
-        _doneButton.onClick.AddListener(MoveDone);
-        _returnButton.onClick.AddListener(MoveBack);
         for (int i = 0; i < places.Count; i++)
         {
             places[i].Id = i;
@@ -49,6 +40,7 @@ public class MoveManager : Singleton<MoveManager>
         _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
 
         _boardCanvas.SubscribeToRestart(Restart);
+        _boardCanvas.SubscribeToDoneReturn(MoveBack,MoveDone);
 
     }
 
@@ -67,7 +59,7 @@ public class MoveManager : Singleton<MoveManager>
     public void SetCurrentPiece(Piece piece)
     {
         currentPiece = piece;
-        _returnButton.interactable = false;
+        _boardCanvas.ToggleReturnButton(false);
     }
 
     public void CheckPlaces()
@@ -98,7 +90,7 @@ public class MoveManager : Singleton<MoveManager>
 
             //Deðilse oyuncuya taþýný geri almasý veya tamamlamasý için hak sunulur
             else
-                _doneButton.interactable = true;
+                 _boardCanvas.ToggleDoneButton(true);
         }
 
         isFirstCheck = false;
@@ -381,8 +373,8 @@ public class MoveManager : Singleton<MoveManager>
             currentPiece = null;
         }
 
-        _returnButton.interactable = moves.Count > 0;
-        _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
+        _boardCanvas.ToggleReturnButton(moves.Count > 0);
+        _boardCanvas.ToggleDoneButton(DiceManager.Instance.Values.Count <= 0);
 
         if (DiceManager.Instance.Values.Count > 0)
             CheckPlaces();
@@ -400,8 +392,8 @@ public class MoveManager : Singleton<MoveManager>
     private void MoveDone()
     {
         moves.Clear();
-        _returnButton.interactable = false;
-        _doneButton.interactable = false;
+        _boardCanvas.ToggleDoneButton(false);
+        _boardCanvas.ToggleReturnButton(false);
         GameManager.Instance.TourDone();
         isFirstCheck = true;
     }
@@ -424,9 +416,8 @@ public class MoveManager : Singleton<MoveManager>
 
         moves.Remove(move);
 
-        _returnButton.interactable = moves.Count > 0;
-        _doneButton.interactable = DiceManager.Instance.Values.Count <= 0;
-
+        _boardCanvas.ToggleReturnButton(moves.Count > 0);
+        _boardCanvas.ToggleDoneButton(DiceManager.Instance.Values.Count <= 0);
 
         CheckPlaces();
     }
@@ -506,8 +497,8 @@ public class MoveManager : Singleton<MoveManager>
         _whiteCollectPlace.RemoveAllPieces();
         _blackCollectPlace.RemoveAllPieces();
         moves.Clear();
-        _returnButton.interactable = false;
-        _doneButton.interactable = false;
+        _boardCanvas.ToggleDoneButton(false);
+        _boardCanvas.ToggleReturnButton(false);
         isFirstCheck = true;
         CloseAllPlaces();
 
