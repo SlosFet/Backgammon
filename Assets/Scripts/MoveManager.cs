@@ -148,42 +148,46 @@ public class MoveManager : MonoBehaviour
         bool hasPlace = false;
 
 
-        for (int i = 0; i < 2; i++)
+        if(broken.parent.GetPieceCount > 1)
         {
-            print("CHECK");
-            var total = (i == 0 ? DiceManager.diceVal1 : DiceManager.diceVal2) - 1;
-
-            if (i == 0 && !DiceManager.Values.Contains(DiceManager.diceVal1))
-                continue;
-
-            if (i == 1 && !DiceManager.Values.Contains(DiceManager.diceVal2))
-                continue;
-
-            if (CheckPlace(broken.places[total].Id))
+            for (int i = 0; i < 2; i++)
             {
-                broken.parent.SetAvailable(true);
-                hasPlace = true;
+                print("CHECK");
+                var total = (i == 0 ? DiceManager.diceVal1 : DiceManager.diceVal2) - 1;
+
+                if (i == 0 && !DiceManager.Values.Contains(DiceManager.diceVal1))
+                    continue;
+
+                if (i == 1 && !DiceManager.Values.Contains(DiceManager.diceVal2))
+                    continue;
+
+                if (CheckPlace(broken.places[total].Id))
+                {
+                    broken.parent.SetAvailable(true);
+                    hasPlace = true;
+                }
             }
         }
 
+        else
+        {
+            //Oyuncunun kýrýk taþýnýn bulunduðu id den yerleþim yerlerine konulabilir mi bakar
+            if (CalculateAvailablePosses(broken.parent.Id))
+            {
+                //Eðer konulabiliyorsa set eder
+                broken.parent.SetAvailable(true);
 
+                //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
+                foreach (int val in DiceManager.Values)
+                {
+                    var total = CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
+                    CheckPlace(total);
+                }
 
+                return true;
+            }
+        }
 
-        ////Oyuncunun kýrýk taþýnýn bulunduðu id den yerleþim yerlerine konulabilir mi bakar
-        //if (CalculateAvailablePosses(broken.parent.Id))
-        //{
-        //    //Eðer konulabiliyorsa set eder
-        //    broken.parent.SetAvailable(true);
-
-        //    //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
-        //    foreach (int val in DiceManager.Values)
-        //    {
-        //        var total = CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
-        //        CheckPlace(total);
-        //    }
-
-        //    return true;
-        //}
 
         return hasPlace;
     }
