@@ -389,6 +389,7 @@ public class MoveManager : Singleton<MoveManager>
     public void AddBrokenPiece(Piece piece)
     {
         SoundManager.Instance.PlaySound(SoundTypes.BrokeSound);
+        ParticleManager.Instance.PlayBrokeParticle(piece.transform.position);
         var broken = _brokenVariables.First(x => x.pieceType == piece.PieceType);
         moves[^1].AddBrokenPiece(piece, piece.transform.parent.GetComponent<BoardPlace>());
         broken.parent.AddPiece(piece);

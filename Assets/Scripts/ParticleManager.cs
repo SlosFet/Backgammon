@@ -10,16 +10,16 @@ public class ParticleManager : Singleton<ParticleManager>
     public void PlayBrokeParticle(Vector3 pos)
     {
         var particle = Instantiate(_brokeParticle);
-        _brokeParticle.transform.position = pos;
-        _brokeParticle.Play();
+        particle.transform.position = pos;
+        particle.Play();
         Destroy(particle.gameObject,3);
     }
 
     public void PlayCollectParticle(Vector3 pos)
     {
         var particle = Instantiate(_collectParticle);
-        _brokeParticle.transform.position = pos;
-        _brokeParticle.Play();
+        particle.transform.position = pos;
+        particle.Play();
         Destroy(particle.gameObject, 3);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +10,7 @@ public class CollectPlace : BoardPlace
     [SerializeField] private TextMeshProUGUI _text;
     public UnityEvent<PieceType> OnPlayerCollectedAll;
 
-    public override void AddPiece(Piece piece)
+    public override async void AddPiece(Piece piece)
     {
         piece.transform.parent = transform;
 
@@ -20,6 +21,8 @@ public class CollectPlace : BoardPlace
 
         _text.text = GetPieceCount.ToString();
         CheckItIsDone();
+        await Task.Delay(200);
+        ParticleManager.Instance.PlayCollectParticle(piece.transform.position);
     }
 
     private void CheckItIsDone()
@@ -29,6 +32,10 @@ public class CollectPlace : BoardPlace
             print("Bitti");
             OnPlayerCollectedAll.Invoke(GetLastPieceType);
         }
+    }
+
+    private void PlayParticle()
+    {
     }
 
 }
