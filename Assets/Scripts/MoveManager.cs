@@ -62,12 +62,17 @@ public class MoveManager : MonoBehaviour
         int dice1 = Random.Range(1, 7);
         int dice2 = Random.Range(1, 7);
         if (dice1 == dice2)
-            dice2 -= 1;
+        {
+            if (dice2 != 1)
+                dice2 -= 1;
+            else
+                dice2 += 1;
+        }
 
-        DiceManager.RollFirstDices(dice1, dice2, 2000);
+        DiceManager.RollFirstDices(dice1, dice2, 0);
         CurrentPieceType = dice1 > dice2 ? PieceType.White : PieceType.Black;
 
-        await Task.Delay(2000);
+        await Task.Delay(0);
 
         DiceManager.OnTourDone();
     }

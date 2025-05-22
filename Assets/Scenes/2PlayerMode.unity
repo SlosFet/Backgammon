@@ -1631,6 +1631,18 @@ PrefabInstance:
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1449831733663043554, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449831733663043554, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449831733663043554, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration2
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1478018510569726091, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 213
@@ -1711,6 +1723,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3506449967894289640, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506449967894289640, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506449967894289640, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration2
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3543550068365987352, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
@@ -1730,6 +1754,18 @@ PrefabInstance:
     - target: {fileID: 4397585412658443126, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518857627727326998, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518857627727326998, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518857627727326998, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration2
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4632123594528162814, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
@@ -1770,6 +1806,18 @@ PrefabInstance:
     - target: {fileID: 8131043533509975730, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: m_Name
       value: Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159427635021541091, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159427635021541091, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159427635021541091, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: spinDuration2
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8916696326589348112, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
