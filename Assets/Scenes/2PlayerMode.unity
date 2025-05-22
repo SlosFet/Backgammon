@@ -1631,6 +1631,10 @@ PrefabInstance:
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1478018510569726091, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 213
+      objectReference: {fileID: 0}
     - target: {fileID: 1871633372142970433, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
@@ -1642,6 +1646,10 @@ PrefabInstance:
     - target: {fileID: 1978394873779764157, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320087959049542177, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -215.52
       objectReference: {fileID: 0}
     - target: {fileID: 2413328942786158680, guid: f58089e99576f0b459e02d3c269a6106, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
