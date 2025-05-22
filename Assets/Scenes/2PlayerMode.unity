@@ -337,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -454,7 +454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -985,7 +985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1011,7 +1011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1117,7 +1117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1254,7 +1254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1590,7 +1590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1901,7 +1901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2780,7 +2780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2997,7 +2997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3063,7 +3063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3234,7 +3234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3442,7 +3442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3508,7 +3508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3660,7 +3660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3686,7 +3686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4038,7 +4038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4075,7 +4075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4216,7 +4216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4268,6 +4268,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
   m_PrefabInstance: {fileID: 1162146210}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1168537097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1168537099}
+  - component: {fileID: 1168537098}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1168537098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168537097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9783f0870cc6d4e8c47180e87604fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _brokeParticle: {fileID: 19831162, guid: 64213efe87b202141b44b6a613b892e9, type: 3}
+  _collectParticle: {fileID: 0}
+--- !u!4 &1168537099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168537097}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.73592925, y: -4.623191, z: 2.4375615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1187063176 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 256512661983634294, guid: 3f4acf93660ddf04cb4bc5ed9762728e, type: 3}
@@ -4514,7 +4560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4580,7 +4626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4748,7 +4794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4774,7 +4820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5078,7 +5124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5270,7 +5316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5514,7 +5560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5720,7 +5766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6126,7 +6172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1855557705362311608, guid: bc1585ed201a0204597ca82351a8d780, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6463,7 +6509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6721,7 +6767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077183542026408274, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: outlineTargets.Array.data[0].IsVisible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7204460360418279565, guid: 8668280bf0c551e48883f574cfc9ee05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8040,3 +8086,4 @@ SceneRoots:
   - {fileID: 1704920268}
   - {fileID: 1928531415}
   - {fileID: 276739132}
+  - {fileID: 1168537099}
