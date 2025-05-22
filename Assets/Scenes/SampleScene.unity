@@ -2214,6 +2214,7 @@ MonoBehaviour:
   _selectedImage: {fileID: 0}
   _hoverObject: {fileID: 0}
   _pieces: []
+  _startPieces: []
   _text: {fileID: 1622099507}
 --- !u!1001 &414932099
 PrefabInstance:
@@ -2479,8 +2480,14 @@ MonoBehaviour:
   _canvasItems:
   - PieceType: 0
     WinPanel: {fileID: 1815357165}
+    RestartButtons:
+    - {fileID: 1985695733}
+    - {fileID: 337434326}
   - PieceType: 1
     WinPanel: {fileID: 935397214}
+    RestartButtons:
+    - {fileID: 1516585349}
+    - {fileID: 861939850}
 --- !u!1 &484087418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3228,6 +3235,7 @@ MonoBehaviour:
   _selectedImage: {fileID: 547282259}
   _hoverObject: {fileID: 1429843051}
   _pieces: []
+  _startPieces: []
   _text: {fileID: 1873375359}
   OnPlayerCollectedAll:
     m_PersistentCalls:
@@ -5994,6 +6002,7 @@ MonoBehaviour:
   _selectedImage: {fileID: 0}
   _hoverObject: {fileID: 0}
   _pieces: []
+  _startPieces: []
   _text: {fileID: 934369537}
 --- !u!1 &1335800073
 GameObject:
@@ -9838,6 +9847,7 @@ MonoBehaviour:
   _selectedImage: {fileID: 3602410}
   _hoverObject: {fileID: 2071107104}
   _pieces: []
+  _startPieces: []
   _text: {fileID: 2085342860}
   OnPlayerCollectedAll:
     m_PersistentCalls:

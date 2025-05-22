@@ -47,6 +47,9 @@ public class MoveManager : Singleton<MoveManager>
 
         _whiteCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
         _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
+
+        _boardCanvas.SubscribeToRestart(Restart);
+
     }
 
     public Vector3 GetMousePos()
@@ -288,10 +291,23 @@ public class MoveManager : Singleton<MoveManager>
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            var pieces = GameObject.FindObjectsOfType<Piece>();
+            foreach (var piece in pieces)
+            {
+                if(piece.PieceType == PieceType.Black)
+                {
+                    _blackCollectPlace.AddPiece(piece);
+                }
+            }
+        }
+
         if (currentPiece == null)
             return;
 
         currentPiece.SetPos(GetMousePos());
+
     }
 
     public void OnDrop(BoardPlace place, bool isCollectedPiece)
@@ -480,6 +496,23 @@ public class MoveManager : Singleton<MoveManager>
                 }
             }
         }
+    }
+
+    private void Restart()
+    {
+        places.ForEach(x => x.RemoveAllPieces());
+        places.ForEach(x => x.AddStartPieces());
+        _brokenVariables.ForEach(x=>x.parent.RemoveAllPieces());
+        _whiteCollectPlace.RemoveAllPieces();
+        _blackCollectPlace.RemoveAllPieces();
+        moves.Clear();
+        _returnButton.interactable = false;
+        _doneButton.interactable = false;
+        isFirstCheck = true;
+        CloseAllPlaces();
+
+        _boardCanvas.CloseWinPanel(GameManager.CurrentPieceType);
+        DiceManager.Instance.OnTourDone();
     }
 }
 

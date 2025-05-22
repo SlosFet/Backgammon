@@ -14,6 +14,8 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     [field: SerializeField] protected List<Piece> _pieces;
 
+    [field: SerializeField] protected List<Piece> _startPieces;
+
     private bool hasSelected = false;
     public int GetPieceCount => _pieces.Count;
     public PieceType GetLastPieceType => _pieces[0].PieceType;
@@ -26,6 +28,8 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         {
             AddPiece(piece);
         }
+
+        _startPieces.AddRange(pieces);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -120,6 +124,16 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         MoveManager.Instance.AddBrokenPiece(_pieces[0]);
         _pieces.RemoveAt(0);
+    }
+
+    public void RemoveAllPieces()
+    {
+        _pieces.Clear();
+    }
+    public void AddStartPieces()
+    {
+        foreach (var piece in _startPieces)
+            AddPiece(piece);
     }
 
     public void OnDrag(PointerEventData eventData)

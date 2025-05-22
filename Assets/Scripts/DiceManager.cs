@@ -132,6 +132,7 @@ public class DiceManager : Singleton<DiceManager>
 
     public void OnTourDone()
     {
+        Values.Clear();
         _whiteDice1.gameObject.SetActive(false);
         _whiteDice2.gameObject.SetActive(false);
         _blackDice1.gameObject.SetActive(false);
