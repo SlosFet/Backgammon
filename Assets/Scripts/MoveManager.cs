@@ -399,6 +399,8 @@ public class MoveManager : MonoBehaviour
         {
             CloseAllPlaces();
             var list = DiceManager.Values.OrderByDescending(x => x).ToList();
+            if(DiceManager.isEqual)
+                list = list.OrderBy(x => x).ToList();
 
             foreach (var val in list)
             {
