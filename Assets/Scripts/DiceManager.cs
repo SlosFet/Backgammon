@@ -52,6 +52,7 @@ public class DiceManager : Singleton<DiceManager>
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
         _boardCanvas.CloseRollButton();
+        SoundManager.Instance.PlaySound(SoundTypes.RollSound, 3);
 
         print("Sent values : " + diceVal1 + " " + diceVal2);
         if (GameManager.CurrentPieceType == PieceType.White)

@@ -36,6 +36,8 @@ public class MoveManager : Singleton<MoveManager>
             places[i].Id = i;
         }
 
+        SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
+
         _whiteCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
         _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
 
@@ -58,6 +60,7 @@ public class MoveManager : Singleton<MoveManager>
 
     public void SetCurrentPiece(Piece piece)
     {
+        SoundManager.Instance.PlaySound(SoundTypes.TakeSound);
         currentPiece = piece;
         _boardCanvas.ToggleReturnButton(false);
     }
@@ -304,6 +307,7 @@ public class MoveManager : Singleton<MoveManager>
 
     public void OnDrop(BoardPlace place, bool isCollectedPiece)
     {
+        SoundManager.Instance.PlaySound(SoundTypes.PlaceSound);
         BoardPlace oldPlace = currentPiece.transform.parent.GetComponent<BoardPlace>();
         int moveVal = Mathf.Abs(oldPlace.Id - place.Id);
 
@@ -384,6 +388,7 @@ public class MoveManager : Singleton<MoveManager>
 
     public void AddBrokenPiece(Piece piece)
     {
+        SoundManager.Instance.PlaySound(SoundTypes.BrokeSound);
         var broken = _brokenVariables.First(x => x.pieceType == piece.PieceType);
         moves[^1].AddBrokenPiece(piece, piece.transform.parent.GetComponent<BoardPlace>());
         broken.parent.AddPiece(piece);
@@ -394,6 +399,7 @@ public class MoveManager : Singleton<MoveManager>
         moves.Clear();
         _boardCanvas.ToggleDoneButton(false);
         _boardCanvas.ToggleReturnButton(false);
+        SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
         GameManager.Instance.TourDone();
         isFirstCheck = true;
     }
@@ -403,6 +409,7 @@ public class MoveManager : Singleton<MoveManager>
         if (moves.Count <= 0)
             return;
 
+        SoundManager.Instance.PlaySound(SoundTypes.PlaceSound);
         Move move = moves[^1];
         DiceManager.Instance.OnMoveReturn(move.moveVal);
         move.newPlace.RemovePiece(move.piece);
@@ -501,6 +508,7 @@ public class MoveManager : Singleton<MoveManager>
         _boardCanvas.ToggleReturnButton(false);
         isFirstCheck = true;
         CloseAllPlaces();
+        SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
 
         _boardCanvas.CloseWinPanel(GameManager.CurrentPieceType);
         DiceManager.Instance.OnTourDone();
