@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CollectPlace : BoardPlace
 {
     [SerializeField] private TextMeshProUGUI _text;
+    public UnityEvent<PieceType> OnPlayerCollectedAll;
 
     public override void AddPiece(Piece piece)
     {
@@ -17,6 +19,16 @@ public class CollectPlace : BoardPlace
         GetComponent<PiecePlacer>().PlacePieces(_pieces);
 
         _text.text = GetPieceCount.ToString();
+        CheckItIsDone();
+    }
+
+    private void CheckItIsDone()
+    {
+        if (GetPieceCount >= 15)
+        {
+            print("Bitti");
+            OnPlayerCollectedAll.Invoke(GetLastPieceType);
+        }
     }
 
 }

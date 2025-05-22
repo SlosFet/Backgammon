@@ -26,8 +26,10 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private List<int> _blackCollectIds;
 
 
-    [SerializeField] private BoardPlace _whiteCollectPlace;
-    [SerializeField] private BoardPlace _blackCollectPlace;
+    [SerializeField] private CollectPlace _whiteCollectPlace;
+    [SerializeField] private CollectPlace _blackCollectPlace;
+
+    [SerializeField] private BoardCanvas _boardCanvas;
 
 
     public LayerMask layer;
@@ -42,6 +44,9 @@ public class MoveManager : Singleton<MoveManager>
         {
             places[i].Id = i;
         }
+
+        _whiteCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
+        _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
     }
 
     public Vector3 GetMousePos()
