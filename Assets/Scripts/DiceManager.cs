@@ -51,7 +51,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
-        _boardCanvas.ToggleRollButton(false);
+        _boardCanvas.CloseRollButton();
 
         print("Sent values : " + diceVal1 + " " + diceVal2);
         if (GameManager.CurrentPieceType == PieceType.White)
@@ -138,6 +138,7 @@ public class DiceManager : Singleton<DiceManager>
         _blackDice1.gameObject.SetActive(false);
         _blackDice2.gameObject.SetActive(false);
 
+        _boardCanvas.CloseRollButton();
         _boardCanvas.ToggleRollButton(true);
     }
 

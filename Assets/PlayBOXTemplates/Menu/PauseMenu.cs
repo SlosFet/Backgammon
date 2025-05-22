@@ -95,5 +95,6 @@ public class PauseMenu : MonoBehaviour
     {
         brightnessValue = 1;
         isSoundGot = false;
+        PlayBoxLauncherDataManager.SaveSound();
     }
 }

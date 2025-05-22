@@ -21,12 +21,6 @@ public class PlayBoxLauncherDataManager : MonoBehaviour
         UnityPipeCommunication.SendMessageToElectron($"SCORE:{1}:{0}:{DateTime.Now}:{PlayBoxLauncherDataManager.GetSound}");
     }
 
-    private void OnApplicationQuit()
-    {
-
-        SaveSound();
-    }
-
     private static void CreateGame()
     {
         var commandLine = System.Environment.GetCommandLineArgs();
