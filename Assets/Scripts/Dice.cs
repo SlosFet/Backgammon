@@ -52,7 +52,6 @@ public class Dice : MonoBehaviour
         isRolling = true;
 
         Quaternion targetRotation = faceRotations[value];
-        print("Value : " + value + " Rotation : " + targetRotation.eulerAngles);
         // Animasyon sýrasýnda sürekli dönsün
         Tween spin = transform.DORotate(new Vector3(Random.Range(0.6f, 1f), 0, Random.Range(0.6f, 1f)) * spinSpeed, .3f, RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)

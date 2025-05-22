@@ -857,12 +857,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158800742}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9230769, z: 0}
+  m_LocalScale: {x: 1.0989012, y: 1.0989012, z: 1.0989012}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1539810773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &158800744
 MonoBehaviour:
@@ -928,6 +928,7 @@ MonoBehaviour:
   _whiteCollectPlace: {fileID: 2132844526}
   _blackCollectPlace: {fileID: 672412852}
   _boardCanvas: {fileID: 458676491}
+  DiceManager: {fileID: 632448632}
   layer:
     serializedVersion: 2
     m_Bits: 64
@@ -1530,6 +1531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: -1
+  MoveManager: {fileID: 0}
   _canAvailable: 0
   _selectedImage: {fileID: 0}
   _hoverObject: {fileID: 0}
@@ -2450,12 +2452,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 632448630}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9230769, z: 0}
+  m_LocalScale: {x: 1.0989012, y: 1.0989012, z: 1.0989012}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1539810773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &632448632
 MonoBehaviour:
@@ -2477,6 +2479,7 @@ MonoBehaviour:
   _whiteDice2: {fileID: 6271492716646974013}
   _blackDice1: {fileID: 735982081}
   _blackDice2: {fileID: 263309835}
+  MoveManager: {fileID: 158800744}
   Values: 
   TotalValue: 0
 --- !u!1 &634664967
@@ -2635,6 +2638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 24
+  MoveManager: {fileID: 0}
   _canAvailable: 0
   _selectedImage: {fileID: 547282259}
   _hoverObject: {fileID: 1429843051}
@@ -4351,14 +4355,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217965880}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9230769, z: 0}
+  m_LocalScale: {x: 1.0989012, y: 1.0989012, z: 1.0989012}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 735982080}
   - {fileID: 263309834}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1539810773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284726321
 GameObject:
@@ -4427,6 +4431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 24
+  MoveManager: {fileID: 0}
   _canAvailable: 0
   _selectedImage: {fileID: 0}
   _hoverObject: {fileID: 0}
@@ -5493,6 +5498,10 @@ Transform:
   - {fileID: 458676490}
   - {fileID: 1486877553}
   - {fileID: 5208924}
+  - {fileID: 1691008082}
+  - {fileID: 1217965881}
+  - {fileID: 632448631}
+  - {fileID: 158800743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1602060308
@@ -6062,14 +6071,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691008081}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9230769, z: 0}
+  m_LocalScale: {x: 1.0989012, y: 1.0989012, z: 1.0989012}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 805115903575504435}
   - {fileID: 4087000482872491792}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1539810773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1704920264
 GameObject:
@@ -7431,6 +7440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: -1
+  MoveManager: {fileID: 0}
   _canAvailable: 0
   _selectedImage: {fileID: 3602410}
   _hoverObject: {fileID: 2071107104}
@@ -8288,12 +8298,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 632448631}
-  - {fileID: 158800743}
   - {fileID: 598999527}
   - {fileID: 1539810773}
-  - {fileID: 1691008082}
-  - {fileID: 1217965881}
   - {fileID: 1984171932}
   - {fileID: 1602060312}
   - {fileID: 1704920268}

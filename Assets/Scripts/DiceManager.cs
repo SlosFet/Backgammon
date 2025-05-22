@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DiceManager : Singleton<DiceManager>
+public class DiceManager : MonoBehaviour
 {
     public int diceVal1;
     public int diceVal2;
@@ -18,6 +18,8 @@ public class DiceManager : Singleton<DiceManager>
 
     [SerializeField] private Dice _blackDice1;
     [SerializeField] private Dice _blackDice2;
+
+    [SerializeField] private MoveManager MoveManager;
 
     public bool isEqual => diceVal1 == diceVal2;
     public int GetRealTotalValue => diceVal1 + diceVal2;
@@ -54,8 +56,7 @@ public class DiceManager : Singleton<DiceManager>
         _boardCanvas.CloseRollButton();
         SoundManager.Instance.PlaySound(SoundTypes.RollSound, 3);
 
-        print("Sent values : " + diceVal1 + " " + diceVal2);
-        if (GameManager.CurrentPieceType == PieceType.White)
+        if (MoveManager.CurrentPieceType == PieceType.White)
         {
             _whiteDice1.Roll(diceVal1);
             await _whiteDice2.Roll(diceVal2);
@@ -68,7 +69,7 @@ public class DiceManager : Singleton<DiceManager>
 
         SetPlaces();
 
-        MoveManager.Instance.CheckPlaces();
+        MoveManager.CheckPlaces();
     }
 
     public void OnPiecePlaced(int val)
@@ -145,8 +146,8 @@ public class DiceManager : Singleton<DiceManager>
 
     public void SetFill(int val)
     {
-        Dice dice1 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
-        Dice dice2 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
+        Dice dice1 = MoveManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
+        Dice dice2 = MoveManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
 
         if(!isEqual)
         {
@@ -174,8 +175,8 @@ public class DiceManager : Singleton<DiceManager>
 
     public void ResetFill()
     {
-        Dice dice1 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
-        Dice dice2 = GameManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
+        Dice dice1 = MoveManager.CurrentPieceType == PieceType.White ? _whiteDice1 : _blackDice1;
+        Dice dice2 = MoveManager.CurrentPieceType == PieceType.White ? _whiteDice2 : _blackDice2;
 
         dice1.SetImageFill(0);
         dice2.SetImageFill(0);

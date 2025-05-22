@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public int Id;
+    public MoveManager MoveManager;
     [field: SerializeField] protected bool _canAvailable = false;
 
     [SerializeField] private GameObject _selectedImage;
@@ -37,8 +38,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!_canAvailable)
             return;
 
-        print("düþtü");
-        MoveManager.Instance.OnDrop(this, TryGetComponent(out CollectPlace place));
+        MoveManager.OnDrop(this, TryGetComponent(out CollectPlace place));
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -46,25 +46,22 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
         if (!hasSelected)
             return;
 
-        print("Býraktý : " + hasSelected);
-
         hasSelected = false;
-        MoveManager.Instance.OnEndDrag(this);
+        MoveManager.OnEndDrag(this);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (MoveManager.Instance.HasPiece || !_canAvailable)
+        if (MoveManager.HasPiece || !_canAvailable)
             return;
 
         if (_pieces.Count <= 0)
             return;
 
-        print("Bastý");
         hasSelected = true;
-        MoveManager.Instance.SetCurrentPiece(_pieces[^1]);
-        MoveManager.Instance.CloseAllPlaces();
-        MoveManager.Instance.CalculateAvailablePosses(Id);
+        MoveManager.SetCurrentPiece(_pieces[^1]);
+        MoveManager.CloseAllPlaces();
+        MoveManager.CalculateAvailablePosses(Id);
     }
 
     public virtual void AddPiece(Piece piece)
@@ -93,7 +90,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public bool CheckAvailable()
     {
-        if (_pieces.Count <= 1 || _pieces[^1].PieceType == GameManager.CurrentPieceType)
+        if (_pieces.Count <= 1 || _pieces[^1].PieceType == MoveManager.CurrentPieceType)
             return true;
 
         return false;
@@ -108,7 +105,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public bool CheckAvailableForChoose()
     {
-        if (_pieces.Count <= 0 || _pieces[^1].PieceType != GameManager.CurrentPieceType)
+        if (_pieces.Count <= 0 || _pieces[^1].PieceType != MoveManager.CurrentPieceType)
             return false;
 
         else
@@ -122,7 +119,7 @@ public class BoardPlace : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void Broke()
     {
-        MoveManager.Instance.AddBrokenPiece(_pieces[0]);
+        MoveManager.AddBrokenPiece(_pieces[0]);
         _pieces.RemoveAt(0);
     }
 

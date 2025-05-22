@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoveManager : Singleton<MoveManager>
+public class MoveManager : MonoBehaviour
 {
     [SerializeField] private float distance;
     [SerializeField] private Piece currentPiece;
@@ -23,9 +23,11 @@ public class MoveManager : Singleton<MoveManager>
     [SerializeField] private CollectPlace _blackCollectPlace;
 
     [SerializeField] private BoardCanvas _boardCanvas;
+    [SerializeField] private DiceManager DiceManager;
 
 
     public LayerMask layer;
+    public PieceType CurrentPieceType;
     public bool HasPiece => currentPiece != null;
     private bool isFirstCheck = true;
 
@@ -34,9 +36,15 @@ public class MoveManager : Singleton<MoveManager>
         for (int i = 0; i < places.Count; i++)
         {
             places[i].Id = i;
+            places[i].MoveManager = this;
         }
 
+        _brokenVariables.ForEach(x=>x.parent.MoveManager = this);
+        _whiteCollectPlace.MoveManager = this;
+        _blackCollectPlace.MoveManager = this;
+
         SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
+        _boardCanvas.MoveManager = this;
 
         _whiteCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
         _blackCollectPlace.OnPlayerCollectedAll.AddListener(_boardCanvas.OpenWinPanel);
@@ -44,7 +52,15 @@ public class MoveManager : Singleton<MoveManager>
         _boardCanvas.SubscribeToRestart(Restart);
         _boardCanvas.SubscribeToDoneReturn(MoveBack,MoveDone);
 
+        SetType();
     }
+
+    private void SetType()
+    {
+        CurrentPieceType = PieceType.White;
+        DiceManager.OnTourDone();
+    }
+
 
     public Vector3 GetMousePos()
     {
@@ -68,9 +84,9 @@ public class MoveManager : Singleton<MoveManager>
     public void CheckPlaces()
     {
         CloseAllPlaces();
-        DiceManager.Instance.ResetFill();
+        DiceManager.ResetFill();
 
-        var broken = _brokenVariables.First(x => x.pieceType == GameManager.CurrentPieceType);
+        var broken = _brokenVariables.First(x => x.pieceType == CurrentPieceType);
 
         bool canPlayerPlay = false;
 
@@ -78,7 +94,7 @@ public class MoveManager : Singleton<MoveManager>
         if (broken.parent.GetPieceCount > 0)
             canPlayerPlay = CheckForBroken(broken);
 
-        else if (CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
+        else if (CheckPlayerCanCollectPieces(CurrentPieceType).Item1)
             canPlayerPlay = CheckForCollect();
 
         else
@@ -136,9 +152,9 @@ public class MoveManager : Singleton<MoveManager>
             broken.parent.SetAvailable(true);
 
             //Konulabilecek yerleri yeþil yapar eðer oyuncu taþa dokunduysa yeþil yapar yoksa yanmaz
-            foreach (int val in DiceManager.Instance.Values)
+            foreach (int val in DiceManager.Values)
             {
-                var total = GameManager.CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
+                var total = CurrentPieceType == PieceType.White ? broken.parent.Id - val : broken.parent.Id + val;
                 CheckPlace(total);
             }
 
@@ -179,30 +195,30 @@ public class MoveManager : Singleton<MoveManager>
     public bool CalculateAvailablePosses(int id)
     {
         bool hasAnyPlace = false;
-        foreach (int val in DiceManager.Instance.Values)
+        foreach (int val in DiceManager.Values)
         {
             bool checkForEqual = false;
 
-            var total = GameManager.CurrentPieceType == PieceType.White ? id - val : id + val;
+            var total = CurrentPieceType == PieceType.White ? id - val : id + val;
             if (CheckPlace(total) || CheckPlaceForCollect(total, id))
             {
                 checkForEqual = true;
                 hasAnyPlace = true;
-                DiceManager.Instance.SetFill(val);
+                DiceManager.SetFill(val);
             }
 
-            if (DiceManager.Instance.isEqual && !checkForEqual)
+            if (DiceManager.isEqual && !checkForEqual)
                 break;
         }
 
         if (!hasAnyPlace)
             return false;
 
-        var totalValue = DiceManager.Instance.TotalValue;
+        var totalValue = DiceManager.TotalValue;
 
         if (totalValue > 0)
         {
-            var total = GameManager.CurrentPieceType == PieceType.White ? id - totalValue : id + totalValue;
+            var total = CurrentPieceType == PieceType.White ? id - totalValue : id + totalValue;
             CheckPlace(total);
             CheckPlaceForCollect(total, id);
         }
@@ -227,13 +243,13 @@ public class MoveManager : Singleton<MoveManager>
 
     private bool CheckPlaceForCollect(int val, int id)
     {
-        var check = CheckPlayerCanCollectPieces(GameManager.CurrentPieceType);
+        var check = CheckPlayerCanCollectPieces(CurrentPieceType);
 
 
         if (check.Item1)
             return CheckPlaceForCollectAlternate(val, id);
 
-        var _places = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
+        var _places = CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
 
         if (!check.Item1 && check.Item2 > 1)
             return false;
@@ -247,7 +263,7 @@ public class MoveManager : Singleton<MoveManager>
         {
             print(val);
 
-            var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
+            var place = CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
             if (currentPiece != null)
                 place.SetAvailable(true);
             return true;
@@ -257,7 +273,7 @@ public class MoveManager : Singleton<MoveManager>
 
     private bool CheckPlaceForCollectAlternate(int val, int id)
     {
-        var place = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
+        var place = CurrentPieceType == PieceType.White ? _whiteCollectPlace : _blackCollectPlace;
 
         if (val == places.Count || val == -1)
         {
@@ -268,11 +284,11 @@ public class MoveManager : Singleton<MoveManager>
 
         if (val > places.Count || val < -1)
         {
-            var indexes = GameManager.CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
+            var indexes = CurrentPieceType == PieceType.White ? _whiteCollectIds : _blackCollectIds;
             int startIndex = indexes.IndexOf(id);
             for (int i = startIndex + 1; i < 6; i++)
             {
-                if (places[indexes[i]].GetPieceCount > 0 && places[indexes[i]].GetLastPieceType == GameManager.CurrentPieceType)
+                if (places[indexes[i]].GetPieceCount > 0 && places[indexes[i]].GetLastPieceType == CurrentPieceType)
                     return false;
             }
 
@@ -311,10 +327,10 @@ public class MoveManager : Singleton<MoveManager>
         BoardPlace oldPlace = currentPiece.transform.parent.GetComponent<BoardPlace>();
         int moveVal = Mathf.Abs(oldPlace.Id - place.Id);
 
-        if (isCollectedPiece && !DiceManager.Instance.Values.Contains(moveVal))
+        if (isCollectedPiece && !DiceManager.Values.Contains(moveVal))
         {
             bool hasChanged = false;
-            var list = DiceManager.Instance.Values.OrderBy(x => x).ToList();
+            var list = DiceManager.Values.OrderBy(x => x).ToList();
             foreach (var item in list)
             {
                 if (item > moveVal)
@@ -326,7 +342,7 @@ public class MoveManager : Singleton<MoveManager>
             }
 
             if (!hasChanged)
-                moveVal = DiceManager.Instance.TotalValue;
+                moveVal = DiceManager.TotalValue;
         }
 
         Move move = new Move(currentPiece, oldPlace, place, moveVal);
@@ -336,12 +352,12 @@ public class MoveManager : Singleton<MoveManager>
         oldPlace.RemovePiece(currentPiece);
         place.AddPiece(currentPiece);
 
-        if (moveVal == DiceManager.Instance.GetRealTotalValue || (DiceManager.Instance.isEqual && moveVal > DiceManager.Instance.diceVal1))
+        if (moveVal == DiceManager.GetRealTotalValue || (DiceManager.isEqual && moveVal > DiceManager.diceVal1))
         {
             BrokePiecesOnFastMove(oldPlace.Id, moveVal);
         }
 
-        DiceManager.Instance.OnPiecePlaced(moveVal);
+        DiceManager.OnPiecePlaced(moveVal);
 
         CloseAllPlaces();
         currentPiece = null;
@@ -353,16 +369,16 @@ public class MoveManager : Singleton<MoveManager>
         if (currentPiece != null && currentPiece.transform.parent == place.transform)
         {
             CloseAllPlaces();
-            var list = DiceManager.Instance.Values.OrderBy(x => x).ToList();
+            var list = DiceManager.Values.OrderBy(x => x).ToList();
 
             foreach (var val in list)
             {
-                var total = GameManager.CurrentPieceType == PieceType.White ? place.Id - val : place.Id + val;
+                var total = CurrentPieceType == PieceType.White ? place.Id - val : place.Id + val;
 
-                if (total <= -1 && CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
+                if (total <= -1 && CheckPlayerCanCollectPieces(CurrentPieceType).Item1)
                     OnDrop(_whiteCollectPlace, true);
 
-                else if (total >= places.Count && CheckPlayerCanCollectPieces(GameManager.CurrentPieceType).Item1)
+                else if (total >= places.Count && CheckPlayerCanCollectPieces(CurrentPieceType).Item1)
                     OnDrop(_blackCollectPlace, true);
 
                 else if (total >= 0 && total < places.Count && places[total].CheckAvailable())
@@ -378,12 +394,12 @@ public class MoveManager : Singleton<MoveManager>
         }
 
         _boardCanvas.ToggleReturnButton(moves.Count > 0);
-        _boardCanvas.ToggleDoneButton(DiceManager.Instance.Values.Count <= 0);
+        _boardCanvas.ToggleDoneButton(DiceManager.Values.Count <= 0);
 
-        if (DiceManager.Instance.Values.Count > 0)
+        if (DiceManager.Values.Count > 0)
             CheckPlaces();
         else
-            DiceManager.Instance.ResetFill();
+            DiceManager.ResetFill();
     }
 
     public void AddBrokenPiece(Piece piece)
@@ -401,7 +417,8 @@ public class MoveManager : Singleton<MoveManager>
         _boardCanvas.ToggleDoneButton(false);
         _boardCanvas.ToggleReturnButton(false);
         SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
-        GameManager.Instance.TourDone();
+        CurrentPieceType = CurrentPieceType == PieceType.White ? PieceType.Black : PieceType.White;
+        DiceManager.OnTourDone();
         isFirstCheck = true;
     }
 
@@ -412,7 +429,7 @@ public class MoveManager : Singleton<MoveManager>
 
         SoundManager.Instance.PlaySound(SoundTypes.PlaceSound);
         Move move = moves[^1];
-        DiceManager.Instance.OnMoveReturn(move.moveVal);
+        DiceManager.OnMoveReturn(move.moveVal);
         move.newPlace.RemovePiece(move.piece);
         move.oldPlace.AddPiece(move.piece);
 
@@ -425,7 +442,7 @@ public class MoveManager : Singleton<MoveManager>
         moves.Remove(move);
 
         _boardCanvas.ToggleReturnButton(moves.Count > 0);
-        _boardCanvas.ToggleDoneButton(DiceManager.Instance.Values.Count <= 0);
+        _boardCanvas.ToggleDoneButton(DiceManager.Values.Count <= 0);
 
         CheckPlaces();
     }
@@ -466,9 +483,9 @@ public class MoveManager : Singleton<MoveManager>
     {
         print("Check piç");
         var list = new List<int>();
-        list.AddRange(DiceManager.Instance.Values);
+        list.AddRange(DiceManager.Values);
 
-        if (DiceManager.Instance.isEqual)
+        if (DiceManager.isEqual)
         {
             List<int> removeIds = new List<int>();
             foreach (var index in list)
@@ -484,10 +501,10 @@ public class MoveManager : Singleton<MoveManager>
 
         foreach (var val in list)
         {
-            var total = GameManager.CurrentPieceType == PieceType.White ? startId - val : startId + val;
+            var total = CurrentPieceType == PieceType.White ? startId - val : startId + val;
             if (total < places.Count && total >= 0)
             {
-                if (places[total].GetPieceCount == 1 && places[total].GetLastPieceType != GameManager.CurrentPieceType)
+                if (places[total].GetPieceCount == 1 && places[total].GetLastPieceType != CurrentPieceType)
                 {
                     print("Checking");
 
@@ -511,8 +528,8 @@ public class MoveManager : Singleton<MoveManager>
         CloseAllPlaces();
         SoundManager.Instance.PlaySound(SoundTypes.NewTourSound);
 
-        _boardCanvas.CloseWinPanel(GameManager.CurrentPieceType);
-        DiceManager.Instance.OnTourDone();
+        _boardCanvas.CloseWinPanel(CurrentPieceType);
+        DiceManager.OnTourDone();
     }
 }
 
