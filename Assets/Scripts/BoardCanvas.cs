@@ -34,5 +34,6 @@ public class BoardCanvas : MonoBehaviour
     public void CloseRollButton() => _canvasItems.ForEach(x => x.ToggleRollButton(false));
     public void ToggleReturnButton(bool state) => _canvasItems.First(x => x.PieceType == MoveManager.CurrentPieceType).ToggleReturnButton(state);
     public void ToggleDoneButton(bool state) => _canvasItems.First(x => x.PieceType == MoveManager.CurrentPieceType).ToggleDoneButton(state);
+    public void ToggleGameButtons(bool state) => _canvasItems.First(x => x.PieceType == MoveManager.CurrentPieceType).ToggleGameButtons(state);
 
 }

@@ -83,6 +83,7 @@ public class MoveManager : MonoBehaviour
 
     public void CheckPlaces()
     {
+        _boardCanvas.ToggleGameButtons(true);
         CloseAllPlaces();
         DiceManager.ResetFill();
 
@@ -441,6 +442,7 @@ public class MoveManager : MonoBehaviour
 
     private void MoveDone()
     {
+        _boardCanvas.ToggleGameButtons(false);
         moves.Clear();
         _boardCanvas.ToggleDoneButton(false);
         _boardCanvas.ToggleReturnButton(false);

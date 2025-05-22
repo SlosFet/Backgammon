@@ -17,9 +17,13 @@ public class BoardCanvasItems : MonoBehaviour
     public void AddFunctionToRestartButtons(UnityAction action) => RestartButtons.ForEach(x=>x.onClick.AddListener(action));
     public void TogglewWinPanel(bool state) => WinPanel.SetActive(state);
     public void ToggleRollButton(bool state) => RollButton.gameObject.SetActive(state);
-    public void ToggleReturnButton(bool state) => ReturnButton.gameObject.SetActive(state);
-    public void ToggleDoneButton(bool state) => DoneButton.gameObject.SetActive(state);
-
+    public void ToggleReturnButton(bool state) => ReturnButton.interactable = state;
+    public void ToggleDoneButton(bool state) => DoneButton.interactable = state;
+    public void ToggleGameButtons(bool state)
+    {
+        ReturnButton.gameObject.SetActive(state);
+        DoneButton.gameObject.SetActive(state);
+    }
     public void SetFunctions(UnityAction Return, UnityAction Done)
     {
         ReturnButton.onClick.AddListener(Return);
