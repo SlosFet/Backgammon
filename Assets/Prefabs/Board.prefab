@@ -1328,8 +1328,9 @@ MonoBehaviour:
   jumpPower2: 0.3
   jumpDuration: 0.5
   moveDuration: 0.4
-  spinSpeed: 360
-  spinSpeed2: 360
+  spinSpeed: 720
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 4537860610883053429}
@@ -1910,8 +1911,9 @@ MonoBehaviour:
   jumpPower2: 0.3
   jumpDuration: 0.5
   moveDuration: 0.4
-  spinSpeed: 360
-  spinSpeed2: 360
+  spinSpeed: 720
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 7271840427001907952}
@@ -2136,8 +2138,9 @@ MonoBehaviour:
   jumpPower2: 0.3
   jumpDuration: 0.5
   moveDuration: 0.4
-  spinSpeed: 360
-  spinSpeed2: 360
+  spinSpeed: 720
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 5753089284204787210}
@@ -2493,7 +2496,8 @@ MonoBehaviour:
   jumpDuration: 0.5
   moveDuration: 0.4
   spinSpeed: 360
-  spinSpeed2: 360
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 3796374651203951978}
@@ -2707,7 +2711,8 @@ MonoBehaviour:
   jumpDuration: 0.5
   moveDuration: 0.4
   spinSpeed: 360
-  spinSpeed2: 360
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 4004195319767552892}
@@ -4451,8 +4456,9 @@ MonoBehaviour:
   jumpPower2: 0.3
   jumpDuration: 0.5
   moveDuration: 0.4
-  spinSpeed: 360
-  spinSpeed2: 360
+  spinSpeed: 720
+  spinDuration: 1
+  spinDuration2: 0.3
   rot: {x: 0, y: 0, z: 0}
   value: 0
   canvas: {fileID: 4505245935927370298}

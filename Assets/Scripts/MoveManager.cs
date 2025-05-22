@@ -69,10 +69,10 @@ public class MoveManager : MonoBehaviour
                 dice2 += 1;
         }
 
-        DiceManager.RollFirstDices(dice1, dice2, 0);
+        DiceManager.RollFirstDices(dice1, dice2, 2000);
         CurrentPieceType = dice1 > dice2 ? PieceType.White : PieceType.Black;
 
-        await Task.Delay(0);
+        await Task.Delay(2000);
 
         DiceManager.OnTourDone();
     }
