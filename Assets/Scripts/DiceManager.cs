@@ -69,7 +69,7 @@ public class DiceManager : MonoBehaviour
     {
         diceVal1 = isCheatActive ? diceVal1 : Random.Range(1, 7);
         diceVal2 = isCheatActive ? diceVal2 : Random.Range(1, 7);
-        //_boardCanvas.CloseRollButton();
+        _boardCanvas.CloseRollButton();
         SoundManager.Instance.PlaySound(SoundTypes.RollSound, 3);
 
         if (MoveManager.CurrentPieceType == PieceType.White)
