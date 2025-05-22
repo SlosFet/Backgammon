@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,9 @@ public class DiceManager : MonoBehaviour
     [SerializeField] private Dice _blackDice1;
     [SerializeField] private Dice _blackDice2;
 
+    [SerializeField] private Dice _startLeftDice;
+    [SerializeField] private Dice _startRightDice;
+
     [SerializeField] private MoveManager MoveManager;
 
     public bool isEqual => diceVal1 == diceVal2;
@@ -32,6 +36,18 @@ public class DiceManager : MonoBehaviour
     {
         _boardCanvas.SubscribeToRoll(RollDices);
     }
+
+    public async void RollFirstDices(int dice1, int dice2, int waitTime)
+    {
+        _startRightDice.RollFirst(dice1);
+        _startLeftDice.RollFirst(dice2);
+
+        await Task.Delay(waitTime);
+
+        _startRightDice.gameObject.SetActive(false);
+        _startLeftDice.gameObject.SetActive(false);
+    }
+
     public void SetPlaces()
     {
         Values.Clear();

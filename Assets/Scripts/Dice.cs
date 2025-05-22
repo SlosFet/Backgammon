@@ -83,4 +83,12 @@ public class Dice : MonoBehaviour
 
     public void SetImageFill(float amount) => image.fillAmount = amount;
     public float GetImageFill() => image.fillAmount ;
+
+    public void RollFirst(int value)
+    {
+        canvas.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        transform.DOJump(transform.position, 0.5f, 1, 0.5f);
+        transform.DORotate(faceRotations[value].eulerAngles, 0.5f, RotateMode.FastBeyond360);
+    }
 }

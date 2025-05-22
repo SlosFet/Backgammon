@@ -57,9 +57,18 @@ public class MoveManager : MonoBehaviour
         SetType();
     }
 
-    private void SetType()
+    private async void SetType()
     {
-        CurrentPieceType = PieceType.White;
+        int dice1 = Random.Range(1, 7);
+        int dice2 = Random.Range(1, 7);
+        if (dice1 == dice2)
+            dice2 -= 1;
+
+        DiceManager.RollFirstDices(dice1, dice2, 2000);
+        CurrentPieceType = dice1 > dice2 ? PieceType.White : PieceType.Black;
+
+        await Task.Delay(2000);
+
         DiceManager.OnTourDone();
     }
 
@@ -71,18 +80,18 @@ public class MoveManager : MonoBehaviour
         if (Input.touchCount == 0)
         {
             rayPos = Input.mousePosition;
-           
+
         }
-        
+
         else
         {
             foreach (var touch in Input.touches)
             {
-                if(touch.fingerId == fingerId)
+                if (touch.fingerId == fingerId)
                 {
                     rayPos = touch.position;
                     break;
-                }    
+                }
             }
         }
 
@@ -96,7 +105,7 @@ public class MoveManager : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void SetCurrentPiece(Piece piece,int pointerId)
+    public void SetCurrentPiece(Piece piece, int pointerId)
     {
         fingerId = pointerId;
         SoundManager.Instance.PlaySound(SoundTypes.TakeSound);
@@ -172,7 +181,7 @@ public class MoveManager : MonoBehaviour
         bool hasPlace = false;
 
 
-        if(broken.parent.GetPieceCount > 1)
+        if (broken.parent.GetPieceCount > 1)
         {
             for (int i = 0; i < 2; i++)
             {
@@ -422,7 +431,7 @@ public class MoveManager : MonoBehaviour
         {
             CloseAllPlaces();
             var list = DiceManager.Values.OrderByDescending(x => x).ToList();
-            if(DiceManager.isEqual)
+            if (DiceManager.isEqual)
                 list = list.OrderBy(x => x).ToList();
 
             foreach (var val in list)
