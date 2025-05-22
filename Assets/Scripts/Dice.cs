@@ -24,6 +24,8 @@ public class Dice : MonoBehaviour
     public Transform canvas;
     public Image image;
 
+    [SerializeField] private float _canvasYOffset;
+
     private void Awake()
     {
         // Zar deðerlerine göre üstte hangi yüzey olmalý, o rotasyonlar
@@ -72,6 +74,8 @@ public class Dice : MonoBehaviour
         canvas.gameObject.SetActive(true);
         transform.rotation = targetRotation;
         isRolling = false;
+        canvas.transform.localPosition = Vector3.zero;
+        canvas.transform.position += Vector3.up * _canvasYOffset;
         canvas.transform.eulerAngles = Vector3.zero;
         SetImageFill(0);
         await Task.CompletedTask;
